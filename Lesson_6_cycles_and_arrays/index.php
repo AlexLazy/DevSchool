@@ -4,6 +4,7 @@
     
     session_start();
 
+    $host  = $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
     $private = '';
     $company = '';
     
@@ -42,6 +43,7 @@
             '30'=>'Товары для детей и игрушки'
             ]
         ];
+
     require( dirname( __FILE__ ) . '/functions.php' );//Подключение функция
     require( dirname( __FILE__ ) . '/header.html' );//Подключение шапки
     (isset($_GET['post_id'])) ? require( dirname( __FILE__ ) . '/single_post.html' ) : require( dirname( __FILE__ ) . '/form.html' );//Выводит заполненную либо пустую форму
