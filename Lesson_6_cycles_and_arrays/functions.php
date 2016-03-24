@@ -40,7 +40,7 @@
     }
 
     function deletePost() {//Удаляет из сессии объявление
-        $host  = $_SERVER['HTTP_REFERER'];
+        $host  = $_SERVER['HTTP_HOST'] . dirname( __FILE__ );
         if (isset($_GET['id']) && isset($_SESSION['posts'][$_GET['id']])) {
             if ($_GET['id'] >= 0) {
                 unset($_SESSION['posts'][$_GET['id']]);
