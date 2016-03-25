@@ -2,10 +2,10 @@
 
     function parseForm () {//Собирает данные из массива пост в сессию при отправке формы
         if(!isset($_SESSION['posts'])) {
-            if (isset($_POST['submit']) && $_POST != '') {
+            if (is_array($_POST) && $_POST != '') {
                 $_SESSION['posts'][] = $_POST;
             }
-        }elseif (isset($_POST['submit']) && $_POST != '' && end($_SESSION['posts']) !== $_POST) {
+        }elseif(is_array($_POST) && $_POST != '' && end($_SESSION['posts']) !== $_POST) {
             $_SESSION['posts'][] = $_POST;
         }
     }
@@ -30,24 +30,22 @@
     function showPost() {//Выводит объявления
         if(isset($_SESSION['posts'])) {
             foreach ($_SESSION['posts'] as $key => $value) {
-                $val = $_SESSION['posts'];
-                echo "<div class='panel panel-success'>";
-                echo "<div class='panel-heading'><a href='index.php?post_id=" . $key . "'>" . $val[$key]['title'] . "</a></div>";
-                echo "<div class='panel-body'>" . $val[$key]['price'] . " руб | " . $val[$key]['seller_name'] . " | <a href='?id=" . $key . "'>Удалить</a></div>";
-                echo "</div>";
+                if($key !== 0) {
+                    $val = $_SESSION['posts'];
+                    echo "<div class='panel panel-success'>";
+                    echo "<div class='panel-heading'><a href='index.php?post_id=" . $key . "'>" . $val[$key]['title'] . "</a></div>";
+                    echo "<div class='panel-body'>" . $val[$key]['price'] . " руб | " . $val[$key]['seller_name'] . " | <a href='?id=" . $key . "'>Удалить</a></div>";
+                    echo "</div>";
+                }
             }
-        }
+        } 
     }
 
     function deletePost() {//Удаляет из сессии объявление
         global $host;
-        if (isset($_GET['id']) && isset($_SESSION['posts'][$_GET['id']])) {
-            if ($_GET['id'] >= 0) {
-                unset($_SESSION['posts'][$_GET['id']]);
-                header("Location: http://$host");
-                exit;
-            }
-        }
+        unset($_SESSION['posts'][$_GET['id']]);
+        header("Location: http://$host");
+        exit;
     }
     
     function showInput($val) {//Выводит инпуты со значениями из сессии
@@ -63,6 +61,3 @@
             echo $value;
         }
     }
-
-    deletePost();
-    parseForm();
