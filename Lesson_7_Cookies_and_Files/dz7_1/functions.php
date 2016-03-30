@@ -37,6 +37,24 @@
         }
         
     }
+        
+    function showInput($val) {//Выводит инпуты со значениями из куки
+        
+        global $private, $company;
+        $posts = unserialize($_COOKIE['posts']);
+        
+        if (isset($posts[$_GET['post_id']][$val])) {//инпут
+            $value = $posts[$_GET['post_id']][$val];
+        }
+        if ($val == 'private') {//радио-баттон и чекбокс
+            ($value > 0) ? $private = 'checked' : $company = 'checked';
+        } elseif ($val == 'allow_mails' && isset($value)) {
+            echo 'checked';
+        } elseif (isset($value)) {
+            echo strip_tags($value);
+        }
+        
+    }
     
     function showPost() {//Выводит объявления
         
@@ -45,8 +63,10 @@
             foreach ($posts as $key => $value) {
                 $val = $posts;
                 echo "<div class='panel panel-success'>";
-                echo "<div class='panel-heading'><a href='index.php?post_id=" . $key . "'>" . $val[$key]['title'] . "</a></div>";
-                echo "<div class='panel-body'>" . $val[$key]['price'] . " руб | " . $val[$key]['seller_name'] . " | <a href='?id=" . $key . "'>Удалить</a></div>";
+                echo "<div class='panel-heading'><a href='index.php?post_id=" . 
+                        strip_tags($key) . "'>" . strip_tags($val[$key]['title']) . "</a></div>";
+                echo "<div class='panel-body'>" . strip_tags($val[$key]['price']) . " руб | " . 
+                        strip_tags($val[$key]['seller_name']) . " | <a href='?id=" . strip_tags($key) . "'>Удалить</a></div>";
                 echo "</div>";
             }
         } 
@@ -63,22 +83,4 @@
         setcookie('posts', $posts, time()+3600*24*7);
         header("Location: http://$host");
         exit;
-    }
-    
-    function showInput($val) {//Выводит инпуты со значениями из куки
-        
-        global $private, $company;
-        $posts = unserialize($_COOKIE['posts']);
-        
-        if (isset($posts[$_GET['post_id']][$val])) {//инпут
-            $value = $posts[$_GET['post_id']][$val];
-        }
-        if ($val == 'private') {//радио-баттон и чекбокс
-            ($value > 0) ? $private = 'checked' : $company = 'checked';
-        } elseif ($val == 'allow_mails' && isset($value)) {
-            echo 'checked';
-        } elseif (isset($value)) {
-            echo $value;
-        }
-        
     }

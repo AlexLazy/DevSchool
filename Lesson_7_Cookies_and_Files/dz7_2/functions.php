@@ -1,6 +1,6 @@
 <?php
 
-    function parseForm () {//Собирает данные из массива пост в сессию при отправке формы
+    function parseForm () {//Собирает данные из массива пост в файл posts.php при отправке формы
         
         if(!file_get_contents('posts.php')) {
             if (is_array($_POST) && $_POST != '') {
@@ -43,7 +43,7 @@
     }
 
     
-    function showInput($val) {//Выводит инпуты со значениями из сессии
+    function showInput($val) {//Выводит инпуты со значениями из файлa posts.php
         
         global $private, $company;
         
@@ -60,7 +60,7 @@
             } elseif ($val == 'allow_mails' && isset($value)) {
                 echo 'checked';
             } elseif (isset($value)) {
-                echo $value;
+                echo strip_tags($value);
             }
         }
         
@@ -76,15 +76,18 @@
             foreach ($posts as $key => $value) {
                 $val = $posts;
                 echo "<div class='panel panel-success'>";
-                echo "<div class='panel-heading'><a href='index.php?post_id=" . $key . "'>" . $val[$key]['title'] . "</a></div>";
-                echo "<div class='panel-body'>" . $val[$key]['price'] . " руб | " . $val[$key]['seller_name'] . " | <a href='?id=" . $key . "'>Удалить</a></div>";
+                echo "<div class='panel-heading'><a href='index.php?post_id=" .
+                       strip_tags($key) . "'>" . strip_tags($val[$key]['title']) . "</a></div>";
+                echo "<div class='panel-body'>" . strip_tags($val[$key]['price']) . " руб | " . 
+                       strip_tags($val[$key]['seller_name']) . " | <a href='?id=" .
+                       strip_tags($key) . "'>Удалить</a></div>";
                 echo "</div>";
             }
         } 
         
     }
 
-    function deletePost() {//Удаляет из сессии объявление
+    function deletePost() {//Удаляет из файлa posts.php объявление
         
         global $host;
         
