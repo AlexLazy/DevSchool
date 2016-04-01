@@ -1,20 +1,27 @@
 <?php
+    
+    function packAds(&$ads) {
+        $ads = serialize($ads);
+        file_put_contents('ads.php', $ads);
+    }
+    
+    function unpackAds(&$ads) {
+        $ads = file_get_contents('ads.php');
+        $ads = unserialize($ads);
+    }
 
     function parseForm () {//Собирает данные из массива пост в файл posts.php при отправке формы
         
-        if(!file_get_contents('posts.php')) {
+        if(!file_get_contents('ads.php')) {
             if ($_POST['submit'] === 'Отправить' && is_array($_POST) && $_POST != '') {
-                $post[time()] = $_POST;
-                $post = serialize($post);
-                file_put_contents('posts.php', $post);
+                $ads[time()] = $_POST;
+                packAds($ads);
             }
         }else{
-            $posts = file_get_contents('posts.php');
-            $posts = unserialize($posts);
-            if($_POST['submit'] === 'Отправить' && is_array($_POST) && $_POST != '' && end($posts) !== $_POST) {
-                $posts[time()] = $_POST;
-                $posts = serialize($posts);
-                file_put_contents('posts.php', $posts);
+            unpackAds($ads);
+            if($_POST['submit'] === 'Отправить' && is_array($_POST) && $_POST != '' && end($ads) !== $_POST) {
+                $ads[time()] = $_POST;
+                packAds($ads);
             }
         }
         
@@ -22,15 +29,13 @@
 
     function editeForm () {//Сохраняет отредактированное объявление в файл posts.php
         
-        if(!file_get_contents('posts.php')) {
+        if(!file_get_contents('ads.php')) {
             exit;
         }else{
             if($_POST['submit'] === 'Сохранить' && is_array($_POST) && $_POST != '') {
-                $posts = file_get_contents('posts.php');
-                $posts = unserialize($posts);
-                $posts[$_GET['edit']] = $_POST;
-                $posts = serialize($posts);
-                file_put_contents('posts.php', $posts);
+                unpackAds($ads);
+                $ads[$_GET['edit']] = $_POST;
+                packAds($ads);
             }
         }
         
@@ -38,12 +43,11 @@
     
     function showSelect($array, $name) {//Выводит селекты формы
         
-        $posts = file_get_contents('posts.php');
-        $posts = unserialize($posts);
+        unpackAds($ads);
         if(isset($_GET['post_id'])) {
-            $session = $posts[$_GET['post_id']];
+            $session = $ads[$_GET['post_id']];
         }elseif(isset($_GET['edit'])) {
-            $session = $posts[$_GET['edit']];
+            $session = $ads[$_GET['edit']];
         }
         
         
@@ -66,22 +70,21 @@
     function showInput($val) {//Выводит инпуты
         
         if(isset($_GET['post_id']) || isset($_GET['edit'])) {
-            if(!file_get_contents('posts.php')) {
+            if(!file_get_contents('ads.php')) {
             exit;
             }else{
-                $posts = file_get_contents('posts.php');
-                $posts = unserialize($posts);
+                unpackAds($ads);
                 
-                if (isset($_GET['post_id']) && isset($posts[$_GET['post_id']][$val])) {
-                    $value = $posts[$_GET['post_id']][$val];  
-                }elseif(isset($_GET['edit']) && isset($posts[$_GET['edit']][$val])) {
-                    $value = $posts[$_GET['edit']][$val];
+                if (isset($_GET['post_id']) && isset($ads[$_GET['post_id']][$val])) {
+                    $value = $ads[$_GET['post_id']][$val];  
+                }elseif(isset($_GET['edit']) && isset($ads[$_GET['edit']][$val])) {
+                    $value = $ads[$_GET['edit']][$val];
                 }
                 
                 if ($val == 'private' && $value == '1') {
                     echo 'checked';
                     //Очень стыдно за штуку что ниже)))
-                }elseif($val == 'company' && ((isset($_GET['edit']) && $posts[$_GET['edit']]['private'] == '0') || (isset($_GET['post_id']) && $posts[$_GET['post_id']]['private'] == '0'))) {
+                }elseif($val == 'company' && ((isset($_GET['edit']) && $ads[$_GET['edit']]['private'] == '0') || (isset($_GET['post_id']) && $ads[$_GET['post_id']]['private'] == '0'))) {
                     echo 'checked';
                 }elseif($val == 'allow_mails' && isset($value)) {
                     echo 'checked';
@@ -101,14 +104,13 @@
     
     function showPost() {//Выводит объявления
         
-        if(!file_get_contents('posts.php')) {
+        if(!file_get_contents('ads.php')) {
             exit;
         }else{
-            $posts = file_get_contents('posts.php');
-            $posts = unserialize($posts);
-            if(isset($posts)) {
-                foreach ($posts as $key => $value) {
-                    $val = $posts;
+            unpackAds($ads);
+            if(isset($ads)) {
+                foreach ($ads as $key => $value) {
+                    $val = $ads;
                     echo "<div class='panel panel-success'>";
                     echo "<div class='panel-heading'><a href='index.php?post_id=" .
                            strip_tags($key) . "'>" . 
@@ -128,19 +130,17 @@
     function deletePost($var) {//Удаляет из файлa posts.php объявление
         
         global $host;
-        if(!file_get_contents('posts.php')) {
+        if(!file_get_contents('ads.php')) {
             exit;
         }else{
-            $posts = file_get_contents('posts.php');
-            $posts = unserialize($posts);
+            unpackAds($ads);
             if(isset($var)) {
-                unset($posts[$var]);
+                unset($ads[$var]);
             }else{
-                unset($posts);
-                $posts = [];
+                unset($ads);
+                $ads = [];
             }
-            $posts = serialize($posts);
-            file_put_contents('posts.php', $posts);
+            packAds($ads);
             header("Location: http://$host");
             exit;
         }

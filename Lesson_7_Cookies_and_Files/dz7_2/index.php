@@ -19,10 +19,9 @@
     
     
     if(isset($_GET['post_id']) && filter_input(INPUT_GET, 'post_id', FILTER_VALIDATE_INT) > 0) {
-        $posts = file_get_contents('posts.php');
-        $posts = unserialize($posts);
+        unpackAds($ads);
         
-        if(isset($posts[$_GET['post_id']])) {
+        if(isset($ads[$_GET['post_id']])) {
             require( dirname( __FILE__ ) . '/form.html' );//Выводит форму
             formBtnCompleted();
         }else{
