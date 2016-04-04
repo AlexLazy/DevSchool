@@ -17,7 +17,7 @@
         }else{
             unpackAds($ads);
         
-            if ($_POST['submit'] === 'Отправить' && is_array($_POST) && $_POST != '' && end($ads) !== $_POST) {
+            if ($_POST['submit'] === 'Отправить' && is_array($_POST) && $_POST != '' && is_array($ads) && end($ads) !== $_POST) {
                 $ads[time()] = $_POST;
                 packAds($ads);
             }
@@ -128,8 +128,8 @@
     }
 
     function deletePost($var) {//Удаляет из файлa posts.php объявление
-        
         global $host;
+        
         if(!file_get_contents('ads.php')) {
             exit;
         }else{
@@ -157,15 +157,11 @@
     }
     
     function formBtnCompleted() {
-        
         global $host;
-        
         echo '<a href="http://'. $host . '" class="btn btn-primary">Назад</a>';
-        
     }
     
     function formBtnEdit() {
-        
         global $host;
         
         echo '<a href="http://' . $host . '" class="btn btn-primary">Назад</a>'
