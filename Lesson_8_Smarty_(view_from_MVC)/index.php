@@ -42,7 +42,7 @@ if (!file_get_contents($smarty_dir . 'date/ads.php')) {
         }else{
             (isset($_GET['ads'])) ? $fillAds = $ads[$_GET['ads']] : $fillAds = $ads[$_GET['edit']];
             foreach ($fillAds as $key => $value) {
-                (isset($value)) ? $smarty->assign($key, $value) : '';
+                (isset($value)) ? $smarty->assign($key, strip_tags($value)) : '';
             }
         }
     }
