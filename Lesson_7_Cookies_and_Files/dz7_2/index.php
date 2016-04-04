@@ -6,18 +6,16 @@
 
     require( dirname( __FILE__ ) . '/date.php' );//Подключение файла данных
     require( dirname( __FILE__ ) . '/functions.php' );//Подключение функций
-   
-    
-    if (isset($_GET['id']) && filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT) >= -1) {
+
+    if (filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT) >= -1) {
         ($_GET['id'] == -1) ? deletePost() : deletePost($_GET['id']);
     }elseif(isset($_POST['submit'])) {
-        parseForm();
-        editeForm();
+        saveAds();
+        editAds();
     }
     
     require( dirname( __FILE__ ) . '/header.html' );//Подключение шапки
-    
-    
+
     if(isset($_GET['post_id']) && filter_input(INPUT_GET, 'post_id', FILTER_VALIDATE_INT) > 0) {
         unpackAds($ads);
         
@@ -37,8 +35,7 @@
         formBtnMain();
         showPost();
     }
-    
-    
+
     require( dirname( __FILE__ ) . '/footer.html' );//Подключение подвала
     
 ?>

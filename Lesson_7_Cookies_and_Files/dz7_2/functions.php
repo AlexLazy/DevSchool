@@ -10,17 +10,21 @@
         $ads = unserialize($ads);
     }
 
-    function parseForm () {//Собирает данные из массива пост в файл posts.php при отправке формы
+    function saveAds () {//Собирает данные из массива пост в файл posts.php при отправке формы
         
-        unpackAds($ads);
+        if(!file_get_contents('ads.php')) {
+            exit;
+        }else{
+            unpackAds($ads);
         
-        if ($_POST['submit'] === 'Отправить' && is_array($_POST) && $_POST != '' && end($ads) !== $_POST) {
-            $ads[time()] = $_POST;
-            packAds($ads);
+            if ($_POST['submit'] === 'Отправить' && is_array($_POST) && $_POST != '' && end($ads) !== $_POST) {
+                $ads[time()] = $_POST;
+                packAds($ads);
+            }
         }
     }
 
-    function editeForm () {//Сохраняет отредактированное объявление в файл posts.php
+    function editAds () {//Сохраняет отредактированное объявление в файл posts.php
         
         if(!file_get_contents('ads.php')) {
             exit;
@@ -36,25 +40,29 @@
     
     function showSelect($array, $name) {//Выводит селекты формы
         
-        unpackAds($ads);
-        if(isset($_GET['post_id'])) {
-            $session = $ads[$_GET['post_id']];
-        }elseif(isset($_GET['edit'])) {
-            $session = $ads[$_GET['edit']];
-        }
-        
-        
-        foreach ($array as $key => $value) {
-            if (is_array($value)) {
-                echo "<optgroup label='" . $key . "'>";
-                foreach ($value as $key => $val) {
+        if(!file_get_contents('ads.php')) {
+            exit;
+        }else{
+            unpackAds($ads);
+            
+            if(isset($_GET['post_id'])) {
+                $session = $ads[$_GET['post_id']];
+            }elseif(isset($_GET['edit'])) {
+                $session = $ads[$_GET['edit']];
+            }
+
+            foreach ($array as $key => $value) {
+                if (is_array($value)) {
+                    echo "<optgroup label='" . $key . "'>";
+                    foreach ($value as $key => $val) {
+                        ($key == $session[$name]) ? $selected = 'selected' : $selected = '';
+                        echo "<option value='" . $key . "' " . $selected . ">" . $val . "</option>";
+                    }
+                    echo "</optgroup>";
+                }else{
                     ($key == $session[$name]) ? $selected = 'selected' : $selected = '';
-                    echo "<option value='" . $key . "' " . $selected . ">" . $val . "</option>";
+                    echo "<option value='" . $key . "' " . $selected . ">" . $value . "</option>";
                 }
-                echo "</optgroup>";
-            }else{
-                ($key == $session[$name]) ? $selected = 'selected' : $selected = '';
-                echo "<option value='" . $key . "' " . $selected . ">" . $value . "</option>";
             }
         }
         
