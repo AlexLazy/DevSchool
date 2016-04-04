@@ -12,19 +12,12 @@
 
     function parseForm () {//Собирает данные из массива пост в файл posts.php при отправке формы
         
-        if(!file_get_contents('ads.php')) {
-            if ($_POST['submit'] === 'Отправить' && is_array($_POST) && $_POST != '') {
-                $ads[time()] = $_POST;
-                packAds($ads);
-            }
-        }else{
-            unpackAds($ads);
-            if($_POST['submit'] === 'Отправить' && is_array($_POST) && $_POST != '' && end($ads) !== $_POST) {
-                $ads[time()] = $_POST;
-                packAds($ads);
-            }
-        }
+        unpackAds($ads);
         
+        if ($_POST['submit'] === 'Отправить' && is_array($_POST) && $_POST != '' && end($ads) !== $_POST) {
+            $ads[time()] = $_POST;
+            packAds($ads);
+        }
     }
 
     function editeForm () {//Сохраняет отредактированное объявление в файл posts.php
@@ -110,14 +103,13 @@
             unpackAds($ads);
             if(isset($ads)) {
                 foreach ($ads as $key => $value) {
-                    $val = $ads;
                     echo "<div class='panel panel-success'>";
                     echo "<div class='panel-heading'><a href='index.php?post_id=" .
                            strip_tags($key) . "'>" . 
-                           strip_tags($val[$key]['title']) . "</a></div>";
+                           strip_tags($ads[$key]['title']) . "</a></div>";
                     echo "<div class='panel-body'>" . 
-                           strip_tags($val[$key]['price']) . " руб | " . 
-                           strip_tags($val[$key]['seller_name']) . " | <a href='?id=" .
+                           strip_tags($ads[$key]['price']) . " руб | " . 
+                           strip_tags($ads[$key]['seller_name']) . " | <a href='?id=" .
                            strip_tags($key) . "'>Удалить</a>" . " | <a href='?edit=" .
                            strip_tags($key) . "'>Редактировать</a></div>";
                     echo "</div>";
