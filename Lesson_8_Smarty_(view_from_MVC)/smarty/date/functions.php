@@ -31,6 +31,7 @@ function saveAds(&$ads) {
 
 //Удаляет из файлa ads.php объявления
 function deletAds(&$ads, $var) {
+    global $host;
     
     if (isset($var)) {
         unset($ads[$var]);
@@ -40,7 +41,6 @@ function deletAds(&$ads, $var) {
     }
     
     packAds($ads);
-    header("Location: http://xaver.loc");
-    exit;
-    
+    header("Location: $host");
+    exit; 
 }
