@@ -1,8 +1,5 @@
 <?php
 
-$host = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF'];
-$smarty->assign('host', $host);
-
 $smarty->assign('private_arr', [
                             1 => 'Частное лицо',
                             0 => 'Компания'

@@ -74,7 +74,7 @@ function saveAds($table_name='ds_ads_list') {
     }
     mysql_query($insert) or die();
     mysql_close();
-    header("Location: $host");
+    header("Location: /");
     exit; 
 }
 
@@ -93,7 +93,7 @@ function delitAds($id, $table_name='ds_ads_list') {
     
     mysql_query($delit) or die();
     mysql_close();
-    header("Location: $host");
+    header("Location: /");
     exit; 
 }
 
