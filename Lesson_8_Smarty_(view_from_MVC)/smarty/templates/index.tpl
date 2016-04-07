@@ -54,13 +54,6 @@
     {elseif isset($smarty.get.edit) && $smarty.get.edit > 0}
         <a href="{$host}" class="btn btn-primary">Назад</a>
         <input type="submit" value="Сохранить" id="form_submit" name="submit" class="btn btn-success">
-        {if $smarty.post.submit}
-            <div class="panel panel-success" id="edit">
-                <div class="panel-body">
-                    Изменения сохранены
-                </div>
-            </div>
-        {/if}
     {else}
         <input type="submit" value="Отправить" id="form_submit" name="submit" class="btn btn-primary">
         <a class="btn btn-danger" href="?id=-1">Удалить все объявления</a>

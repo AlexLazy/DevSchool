@@ -12,9 +12,8 @@ function unpackAds(&$ads) {
     $ads = unserialize($ads);
 }
 
-//Собирает данные из массива пост в файл ads.php при отправке формы
 function saveAds(&$ads) {
-    
+    global $host;
     if (empty($ads)) {
         if ($_POST['submit'] === 'Отправить' && is_array($_POST) && $_POST != '') {
             $ads[time()] = $_POST;
@@ -26,14 +25,15 @@ function saveAds(&$ads) {
             $ads[$_GET['edit']] = $_POST;
         }
     }
+    header("Location: /");
     
 }
 
 //Удаляет из файлa ads.php объявления
-function deletAds(&$ads, $var) {
+function deletAds(&$ads, $var='') {
     global $host;
     
-    if (isset($var)) {
+    if ($var != null) {
         unset($ads[$var]);
     } else {
         unset($ads);
@@ -41,6 +41,6 @@ function deletAds(&$ads, $var) {
     }
     
     packAds($ads);
-    header("Location: $host");
+    header("Location: /");
     exit; 
 }
