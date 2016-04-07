@@ -50,9 +50,9 @@
         <input required pattern="^[0-9]+$" type="text" class="form-control" value="{$price}" name="price" id="fld_price">
     </div>
     {if isset($smarty.get.ads) && $smarty.get.ads > 0}
-        <a href="{$host}" class="btn btn-primary">Назад</a>
+        <a href="/" class="btn btn-primary">Назад</a>
     {elseif isset($smarty.get.edit) && $smarty.get.edit > 0}
-        <a href="{$host}" class="btn btn-primary">Назад</a>
+        <a href="/" class="btn btn-primary">Назад</a>
         <input type="submit" value="Сохранить" id="form_submit" name="submit" class="btn btn-success">
     {else}
         <input type="submit" value="Отправить" id="form_submit" name="submit" class="btn btn-primary">
