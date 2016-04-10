@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <title>Install</title>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+      <style>
+            body{
+                display:flex;
+                height:100vh;
+            }
+            form{ margin:auto; }
+            .input-group{ margin-bottom:10px }
+            .file{
+                width: 0.1px;
+                height: 0.1px;
+                opacity: 0;
+                overflow: hidden;
+                position: absolute;
+                z-index: -1;
+            }
+      </style>
+    </head>
+    <body>
+        <form action="install.php" method="POST" enctype="multipart/form-data">
+            <div class="input-group">
+                <label class="label label-primary">Server name:</label>
+                <input type="text" class="form-control" value='localhost' name="server_name" required>
+            </div>
+            <div class="input-group">
+                <label class="label label-primary">User name:</label>
+                <input type="text" class="form-control" value='root' name="user_name" required>
+            </div>
+            <div class="input-group">
+                <label class="label label-primary">Password:</label>
+                <input type="text" class="form-control" value='123' name="password" required>
+            </div>
+            <div class="input-group">
+                <label class="label label-primary">Database:</label>
+                <input type="text" class="form-control" value='' name="database" required>
+            </div>
+            <div class="input-group">
+                <label for="file" class="btn btn-default btn-md">Загрузить дамп базы дынных</label>
+                <input type="file" id="file" class="file" name="file" required accept=".sql">
+            </div>
+            <input type="submit" value="install" id="form_submit" name="submit" class="btn btn-success">
+            <a href="index.php" class="btn btn-primary <?= $visibility ?>">Перейти на сайт</a>
+        </form>
+    </body>
+</html>

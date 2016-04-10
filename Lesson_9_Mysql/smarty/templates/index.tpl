@@ -57,18 +57,41 @@
     {else}
         <input type="submit" value="Отправить" id="form_submit" name="submit" class="btn btn-primary">
         <a class="btn btn-danger" href="?id=-1">Удалить все объявления</a>
-        
-            {foreach from=$ads key=key item=val}
-                <div class="panel panel-success">
-                    <div class="panel-heading">
-                        <a href="index.php?ads={$key}">{$ads.$key.title}</a>
-                    </div>
-                    <div class="panel-body">
-                        {$ads.$key.price}руб |
-                        {$ads.$key.seller_name} |
-                        <a href="?id={$key}">Удалить</a> |
-                        <a href="?edit={$key}">Редактировать</a>
-                    </div>
+        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+            <a href="?sort=title" class="btn btn-default" role="button">Название</a>
+            <a href="?sort=seller_name" class="btn btn-default" role="button">Имя</a>
+            <a href="?sort=price" class="btn btn-default" role="button">Цена</a>
+        </div>
+        {foreach from=$ads key=key item=val}
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <a href="index.php?ads={$key}">{$ads.$key.title}</a>
                 </div>
-            {/foreach}
+                <div class="panel-body">
+                    {$ads.$key.price}руб |
+                    {$ads.$key.seller_name} |
+                    <a href="?id={$key}">Удалить</a> |
+                    <a href="?edit={$key}">Редактировать</a>
+                </div>
+            </div>
+        {/foreach}
+        <nav>
+            <ul class="pagination">
+                <li>
+                    <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li>
+                    <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     {/if}

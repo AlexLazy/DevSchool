@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.25-dev, created on 2016-04-06 20:01:55
+<?php /* Smarty version 2.6.25-dev, created on 2016-04-10 13:26:40
          compiled from index.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('function', 'html_radios', 'index.tpl', 2, false),array('function', 'html_checkboxes', 'index.tpl', 15, false),array('function', 'html_options', 'index.tpl', 28, false),)), $this); ?>
@@ -64,35 +64,56 @@ smarty_core_load_plugins(array('plugins' => array(array('function', 'html_radios
 " name="price" id="fld_price">
     </div>
     <?php if (isset ( $_GET['ads'] ) && $_GET['ads'] > 0): ?>
-        <a href="<?php echo $this->_tpl_vars['host']; ?>
-" class="btn btn-primary">Назад</a>
+        <a href="index.php" class="btn btn-primary">Назад</a>
     <?php elseif (isset ( $_GET['edit'] ) && $_GET['edit'] > 0): ?>
-        <a href="<?php echo $this->_tpl_vars['host']; ?>
-" class="btn btn-primary">Назад</a>
+        <a href="index.php" class="btn btn-primary">Назад</a>
         <input type="submit" value="Сохранить" id="form_submit" name="submit" class="btn btn-success">
     <?php else: ?>
         <input type="submit" value="Отправить" id="form_submit" name="submit" class="btn btn-primary">
         <a class="btn btn-danger" href="?id=-1">Удалить все объявления</a>
-        
-            <?php $_from = $this->_tpl_vars['ads']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }if (count($_from)):
+        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+            <a href="?sort=title" class="btn btn-default" role="button">Название</a>
+            <a href="?sort=seller_name" class="btn btn-default" role="button">Имя</a>
+            <a href="?sort=price" class="btn btn-default" role="button">Цена</a>
+        </div>
+        <?php $_from = $this->_tpl_vars['ads']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }if (count($_from)):
     foreach ($_from as $this->_tpl_vars['key'] => $this->_tpl_vars['val']):
 ?>
-                <div class="panel panel-success">
-                    <div class="panel-heading">
-                        <a href="index.php?ads=<?php echo $this->_tpl_vars['key']; ?>
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <a href="index.php?ads=<?php echo $this->_tpl_vars['key']; ?>
 "><?php echo $this->_tpl_vars['ads'][$this->_tpl_vars['key']]['title']; ?>
 </a>
-                    </div>
-                    <div class="panel-body">
-                        <?php echo $this->_tpl_vars['ads'][$this->_tpl_vars['key']]['price']; ?>
-руб |
-                        <?php echo $this->_tpl_vars['ads'][$this->_tpl_vars['key']]['seller_name']; ?>
- |
-                        <a href="?id=<?php echo $this->_tpl_vars['key']; ?>
-">Удалить</a> |
-                        <a href="?edit=<?php echo $this->_tpl_vars['key']; ?>
-">Редактировать</a>
-                    </div>
                 </div>
-            <?php endforeach; endif; unset($_from); ?>
+                <div class="panel-body">
+                    <?php echo $this->_tpl_vars['ads'][$this->_tpl_vars['key']]['price']; ?>
+руб |
+                    <?php echo $this->_tpl_vars['ads'][$this->_tpl_vars['key']]['seller_name']; ?>
+ |
+                    <a href="?id=<?php echo $this->_tpl_vars['key']; ?>
+">Удалить</a> |
+                    <a href="?edit=<?php echo $this->_tpl_vars['key']; ?>
+">Редактировать</a>
+                </div>
+            </div>
+        <?php endforeach; endif; unset($_from); ?>
+        <nav>
+            <ul class="pagination">
+                <li>
+                    <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li>
+                    <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     <?php endif; ?>
