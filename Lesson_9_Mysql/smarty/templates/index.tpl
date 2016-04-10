@@ -1,10 +1,10 @@
-<form  method="POST">
+<form  class="col-md-6" method="POST">
     {html_radios name="private" options=$private_arr selected=$private}
     <div class="input-group">
         <label for="fld_seller_name" class="label label-primary">
             <b>Ваше имя</b>
         </label>
-        <input required type="text" maxlength="40" pattern="(\D+)" class="form-control" value='{$seller_name}' name="seller_name" id="fld_seller_name">
+        <input required type="text" maxlength="40" class="form-control" pattern="[A-Za-zА-Яа-яЁё]" value='{$seller_name}' name="seller_name" id="fld_seller_name">
     </div>
     <div class="input-group">
         <label for="fld_email" class="label label-primary">Электронная почта</label>
@@ -57,7 +57,12 @@
     {else}
         <input type="submit" value="Отправить" id="form_submit" name="submit" class="btn btn-primary">
         <a class="btn btn-danger" href="?id=-1">Удалить все объявления</a>
-        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+    {/if}
+    </form>
+    {if !(isset($smarty.get.ads) && $smarty.get.ads > 0)}
+    
+        <div class="col-md-6">
+            <div class="btn-group btn-group-justified" role="group" aria-label="...">
             <a href="?sort=title" class="btn btn-default" role="button">Название</a>
             <a href="?sort=seller_name" class="btn btn-default" role="button">Имя</a>
             <a href="?sort=price" class="btn btn-default" role="button">Цена</a>
@@ -94,4 +99,5 @@
                 </li>
             </ul>
         </nav>
+        </div>
     {/if}

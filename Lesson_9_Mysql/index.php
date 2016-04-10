@@ -9,6 +9,13 @@ require ($smarty_dir . 'date/cfg.php');//настройки
 require ($smarty_dir . 'date/functions.php');//функции
 require ($smarty_dir . 'date/date.php');//переменные
 
+//Сортировка
+if(isset($_GET['sort']) && ($_GET['sort'] === 'title' || $_GET['sort'] === 'seller_name' || $_GET['sort'] === 'price')){
+    $ads = parseDB($mysqli, $_GET['sort']);
+}else{
+    $ads = parseDB($mysqli);
+}
+
 //Удаление/сохранение объявления
 if (filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT) >= -1) {
     ($_GET['id'] == -1) ? delitAds($mysqli) : delitAds($mysqli, $_GET['id']);
@@ -30,14 +37,6 @@ if (filter_input(INPUT_GET, 'ads', FILTER_VALIDATE_INT) > 0 || filter_input(INPU
         }
     }
 }
-
-if(isset($_GET['sort'])){
-    $ads = parseDB($mysqli, $_GET['sort']);
-}else{
-    $ads = parseDB($mysqli);
-}
-
-
 
 $smarty->assign('ads', $ads);
 $mysqli->close();

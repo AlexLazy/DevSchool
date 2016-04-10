@@ -14,7 +14,9 @@ function select($mysqli, $table_name, $optgroup=''){
         }
     }
     
-    return $res;
+    if(isset($res)) {
+        return $res;
+    }
     $result->close();
 }
 
@@ -30,7 +32,7 @@ function parseDB($mysqli, $order='id', $table_name='ds_ads_list'){
     $result->close();
 }
 
-//Сохраняет/редактирует форму
+//Сохраняет форму
 function saveAds($mysqli, $post, $table_name='ds_ads_list') {
     $stmt = $mysqli->prepare("INSERT INTO $table_name
                                     (`private`,
@@ -61,6 +63,7 @@ function saveAds($mysqli, $post, $table_name='ds_ads_list') {
     exit; 
 }
 
+//Редактирует форму
 function editAds($mysqli, $post, $id, $table_name='ds_ads_list') {
     $stmt = $mysqli->prepare("UPDATE $table_name SET
                                             `private` = ?,

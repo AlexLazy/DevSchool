@@ -3,8 +3,7 @@
 $visibility = 'hidden';
 if(isset($_POST['submit']) && $_POST['submit'] == 'install'){
     if ($_FILES["file"]["size"] > 1024 * 2 * 1024) {
-        echo ("Размер файла превышает два мегабайта");
-        exit;
+        exit('Размер файла превышает два мегабайта');
     }
     // Проверяем загружен ли файл
     if (is_uploaded_file($_FILES["file"]["tmp_name"])) {
@@ -12,7 +11,7 @@ if(isset($_POST['submit']) && $_POST['submit'] == 'install'){
         // из временной директории в конечную
         move_uploaded_file($_FILES["file"]["tmp_name"], "/var/www/public_html/" . $_FILES["file"]["name"]);
     } else {
-        echo("Ошибка загрузки файла");
+        exit('Ошибка загрузки файла');
     }
     
     file_put_contents('smarty/date/sql.cfg.php', "<?php\n");
@@ -26,6 +25,7 @@ if(isset($_POST['submit']) && $_POST['submit'] == 'install'){
     $mysqli = new mysqli($servername, $username, $password, $database) or die('Не удалось подключиться к бд');
     $result = $mysqli->query("show tables") or die();
     
+    //Очистка бд
     if($result->num_rows > 0){
         while ( $row = $result->fetch_row() ){
             $table[$row[key($row)]] = $row[key($row)];
@@ -38,6 +38,7 @@ if(isset($_POST['submit']) && $_POST['submit'] == 'install'){
     $all_lines = file($_FILES["file"]["name"], FILE_SKIP_EMPTY_LINES | FILE_IGNORE_NEW_LINES) or die('Отсутствует файл дампа');
     $templine = '';
     
+    //Загрузка дампа
     foreach($all_lines as $query) {
         if(substr($query, 0, 2) == "--") {
             continue;
@@ -55,7 +56,7 @@ if(isset($_POST['submit']) && $_POST['submit'] == 'install'){
     file_put_contents('smarty/date/sql.cfg.php', '$password = ' . "'" . $password . "';\n", FILE_APPEND);
     
     $mysqli->close();
-    $visibility = '';
+    $visibility = '';//открывает кнопку перехода на сайт
 }
 ?>
 <!doctype html>
@@ -93,7 +94,7 @@ if(isset($_POST['submit']) && $_POST['submit'] == 'install'){
             </div>
             <div class="input-group">
                 <label class="label label-primary">Password:</label>
-                <input type="text" class="form-control" value='123' name="password" required>
+                <input type="text" class="form-control" value='' name="password">
             </div>
             <div class="input-group">
                 <label class="label label-primary">Database:</label>
