@@ -4,7 +4,7 @@
         <label for="fld_seller_name" class="label label-primary">
             <b>Ваше имя</b>
         </label>
-        <input required type="text" maxlength="40" class="form-control" pattern="[A-Za-zА-Яа-яЁё]" value='{$seller_name}' name="seller_name" id="fld_seller_name">
+        <input required type="text" maxlength="40" class="form-control" pattern="[A-Za-zА-Яа-яЁё]+" value='{$seller_name}' name="seller_name" id="fld_seller_name">
     </div>
     <div class="input-group">
         <label for="fld_email" class="label label-primary">Электронная почта</label>
