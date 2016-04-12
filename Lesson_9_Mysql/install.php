@@ -9,7 +9,7 @@ if(isset($_POST['submit']) && $_POST['submit'] == 'install'){
     if (is_uploaded_file($_FILES["file"]["tmp_name"])) {
         // Если файл загружен успешно, перемещаем его
         // из временной директории в конечную
-        move_uploaded_file($_FILES["file"]["tmp_name"], "/var/www/public_html/" . $_FILES["file"]["name"]);
+        move_uploaded_file($_FILES["file"]["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . '/' . $_FILES["file"]["name"]);
     } else {
         exit('Ошибка загрузки файла');
     }

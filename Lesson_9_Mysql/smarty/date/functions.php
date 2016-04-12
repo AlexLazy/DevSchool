@@ -1,7 +1,8 @@
 <?php
 
 //Выводит данные для селектов
-function select($mysqli, $table_name, $optgroup=''){
+function select($table_name, $optgroup=''){
+    global $mysqli;
     $result = $mysqli->query("select * from $table_name") or die();
     
     if(empty($optgroup)){
@@ -21,8 +22,9 @@ function select($mysqli, $table_name, $optgroup=''){
 }
 
 //Собирает данные таблицы
-function parseDB($mysqli, $order='id', $table_name='ds_ads_list'){
-    $result = $mysqli->query("select * from $table_name order by $order") or die($mysqli->error);
+function parseDB($order='id', $table_name='ds_ads_list'){
+    global $mysqli;
+    $result = $mysqli->query("select * from $table_name order by $order") or die();
     while ($row = $result->fetch_assoc()) {
         $res[$row['id']] = $row;
     }
@@ -33,7 +35,8 @@ function parseDB($mysqli, $order='id', $table_name='ds_ads_list'){
 }
 
 //Сохраняет форму
-function saveAds($mysqli, $post, $table_name='ds_ads_list') {
+function saveAds($post, $table_name='ds_ads_list') {
+    global $mysqli;
     $stmt = $mysqli->prepare("INSERT INTO $table_name
                                     (`private`,
                                     `seller_name`,
@@ -45,7 +48,7 @@ function saveAds($mysqli, $post, $table_name='ds_ads_list') {
                                     `title`,
                                     `description`,
                                     `price`)
-                                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)") or die($stmt->error());
+                                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)") or die();
     $stmt->bind_param('issisiisii',
                         $post['private'],
                         $post['seller_name'],
@@ -64,7 +67,8 @@ function saveAds($mysqli, $post, $table_name='ds_ads_list') {
 }
 
 //Редактирует форму
-function editAds($mysqli, $post, $id, $table_name='ds_ads_list') {
+function editAds($post, $id, $table_name='ds_ads_list') {
+    global $mysqli;
     $stmt = $mysqli->prepare("UPDATE $table_name SET
                                             `private` = ?,
                                             `seller_name` = ?,
@@ -97,7 +101,8 @@ function editAds($mysqli, $post, $id, $table_name='ds_ads_list') {
 }
 
 //Удаляет объявление/очищает базу
-function delitAds($mysqli, $id='', $table_name='ds_ads_list') {
+function delitAds($id='', $table_name='ds_ads_list') {
+    global $mysqli;
     if ($id != null) {
         $stmt = $mysqli->prepare("DELETE FROM $table_name WHERE id = ?") or die();
         $stmt->bind_param('i', $id);

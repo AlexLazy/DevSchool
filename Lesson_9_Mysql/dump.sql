@@ -17,7 +17,7 @@ CREATE TABLE `ds_ads_list` (
   `category_id` varchar(11) NOT NULL,
   `title` varchar(200) NOT NULL,
   `description` varchar(500) NOT NULL,
-  `price` mediumint(255) NOT NULL,
+  `price` bigint(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -67,4 +67,4 @@ INSERT INTO `ds_location` (`id`, `name`) VALUES
 (641630,	'Колывань'),
 (641680,	'Краснообск');
 
--- 2016-04-10 11:56:34
+-- 2016-04-12 18:38:40

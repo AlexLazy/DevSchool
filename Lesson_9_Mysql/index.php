@@ -11,18 +11,18 @@ require ($smarty_dir . 'date/date.php');//переменные
 
 //Сортировка
 if(isset($_GET['sort']) && ($_GET['sort'] === 'title' || $_GET['sort'] === 'seller_name' || $_GET['sort'] === 'price')){
-    $ads = parseDB($mysqli, $_GET['sort']);
+    $ads = parseDB($_GET['sort']);
 }else{
-    $ads = parseDB($mysqli);
+    $ads = parseDB();
 }
 
 //Удаление/сохранение объявления
 if (filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT) >= -1) {
-    ($_GET['id'] == -1) ? delitAds($mysqli) : delitAds($mysqli, $_GET['id']);
+    ($_GET['id'] == -1) ? delitAds() : delitAds($_GET['id']);
 }elseif(isset($_POST['submit']) && $_POST['submit'] === 'Отправить') {
-    saveAds($mysqli, $post);
+    saveAds($post);
 }elseif(isset($_POST['submit']) && $_POST['submit'] === 'Сохранить') {
-    editAds($mysqli, $post, $_GET['edit']);
+    editAds($post, $_GET['edit']);
 }
 
 //Проверка на наличие объявления в базе/присвоение значений переменным полей формы

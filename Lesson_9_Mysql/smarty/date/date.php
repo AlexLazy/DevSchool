@@ -1,6 +1,6 @@
 <?php
-$location = select($mysqli, 'ds_location');
-$category = select($mysqli, 'ds_category', 'category');
+$location = select('ds_location');
+$category = select('ds_category', 'category');
 
 $smarty->assign('private_arr', [
                             1 => 'Частное лицо',
