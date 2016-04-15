@@ -8,6 +8,7 @@ if(!isset($servername) || !isset($database) || !isset($username)) {
 }
 require_once $smarty_dir . 'libs/dbsimple/config.php';
 require_once $smarty_dir . 'libs/dbsimple/DbSimple/Generic.php';
+require_once $smarty_dir . 'libs/FirePHPCore/FirePHP.class.php';
 require_once $smarty_dir . 'libs/Smarty.class.php';
 
 $smarty = new Smarty();
@@ -20,14 +21,17 @@ $smarty->compile_dir = $smarty_dir . 'templates_c';
 $smarty->cache_dir = $smarty_dir . 'cache';
 $smarty->config_dir = $smarty_dir . 'configs';
 
+$firePHP = FirePHP::getInstance(true);
+$firePHP->setEnabled(true);
+
 // Подключаемся к БД.
 $mysqli = DbSimple_Generic::connect("mysqli://$username:$password@$servername/$database");
 
-// Устанавливаем обработчик ошибок.
-$mysqli->setErrorHandler('databaseErrorHandler');
-
 define(TABLE_PREFIX, 'ds_'); // с подчерком!
 $mysqli->setIdentPrefix(TABLE_PREFIX); 
+
+// Устанавливаем обработчик ошибок.
+$mysqli->setErrorHandler('databaseErrorHandler');
 
 // Код обработчика ошибок SQL.
 function databaseErrorHandler($message, $info)
@@ -40,3 +44,4 @@ function databaseErrorHandler($message, $info)
     echo "</pre>";
     exit();
 }
+
