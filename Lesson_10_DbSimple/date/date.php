@@ -1,7 +1,6 @@
 <?php
 $location = select('location');
 $category = select('category', 'parent_id');
-//print_r($category);
 
 $smarty->assign('private_arr', [
                             1 => 'Частное лицо',
@@ -33,7 +32,7 @@ if(isset($_POST['submit'])){
         'private' => (int)$_POST['private'],
         'seller_name' => (string) $_POST['seller_name'],
         'email'       => (string) $_POST['email'],
-        'allow_mails'  => $allow_mails,
+        'allow_mails' => $allow_mails,
         'phone'       => (string) $_POST['phone'],
         'location_id' => (int) $_POST['location_id'],
         'category_id' => (int) $_POST['category_id'],

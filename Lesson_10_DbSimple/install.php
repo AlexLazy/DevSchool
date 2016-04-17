@@ -1,20 +1,28 @@
 <?php
 
+if ( !defined('ABSPATH') )
+	define('ABSPATH', dirname(__FILE__) . '/');
+
 $visibility = 'hidden';
-if(isset($_POST['submit']) && $_POST['submit'] == 'install'){
-    if ($_FILES["file"]["size"] > 1024 * 2 * 1024) {
+if(isset($_POST['submit']) && $_POST['submit'] == 'install')
+{
+    if ($_FILES["file"]["size"] > 1024 * 2 * 1024)
+    {
         exit('Размер файла превышает два мегабайта');
     }
     // Проверяем загружен ли файл
-    if (is_uploaded_file($_FILES["file"]["tmp_name"])) {
+    if (is_uploaded_file($_FILES["file"]["tmp_name"]))
+    {
         // Если файл загружен успешно, перемещаем его
         // из временной директории в конечную
         move_uploaded_file($_FILES["file"]["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . '/' . $_FILES["file"]["name"]);
-    } else {
+    }
+    else
+    {
         exit('Ошибка загрузки файла');
     }
     
-    file_put_contents('smarty/date/sql.cfg.php', "<?php\n");
+    file_put_contents(ABSPATH . 'date/sql.cfg.php', "<?php\n");
     $servername = $_POST['server_name'];
     $username = $_POST['user_name'];
     $password = $_POST['password'];
@@ -26,8 +34,10 @@ if(isset($_POST['submit']) && $_POST['submit'] == 'install'){
     $result = $mysqli->query("show tables") or die();
     
     //Очистка бд
-    if($result->num_rows > 0){
-        while ( $row = $result->fetch_row() ){
+    if($result->num_rows > 0)
+    {
+        while ( $row = $result->fetch_row() )
+        {
             $table[$row[key($row)]] = $row[key($row)];
         }
         $result->close();
@@ -39,22 +49,25 @@ if(isset($_POST['submit']) && $_POST['submit'] == 'install'){
     $templine = '';
     
     //Загрузка дампа
-    foreach($all_lines as $query) {
-        if(substr($query, 0, 2) == "--") {
+    foreach($all_lines as $query)
+    {
+        if(substr($query, 0, 2) == "--")
+        {
             continue;
         }
         $templine .= $query;
-        if (substr(trim($query), -1, 1) == ';') {
+        if (substr(trim($query), -1, 1) == ';')
+        {
             $mysqli->query($templine) or die('Ошибка считывания файла дампа');
             $templine = '';
         }
         
     }
     
-    file_put_contents('smarty/date/sql.cfg.php', '$servername = ' . "'" . $servername . "';\n", FILE_APPEND);
-    file_put_contents('smarty/date/sql.cfg.php', '$username = ' . "'" . $username . "';\n", FILE_APPEND);
-    file_put_contents('smarty/date/sql.cfg.php', '$database = ' . "'" . $database . "';\n", FILE_APPEND);
-    file_put_contents('smarty/date/sql.cfg.php', '$password = ' . "'" . $password . "';\n", FILE_APPEND);
+    file_put_contents(ABSPATH . 'date/sql.cfg.php', '$servername = ' . "'" . $servername . "';\n", FILE_APPEND);
+    file_put_contents(ABSPATH . 'date/sql.cfg.php', '$username = ' . "'" . $username . "';\n", FILE_APPEND);
+    file_put_contents(ABSPATH . 'date/sql.cfg.php', '$database = ' . "'" . $database . "';\n", FILE_APPEND);
+    file_put_contents(ABSPATH . 'date/sql.cfg.php', '$password = ' . "'" . $password . "';\n", FILE_APPEND);
     
     $mysqli->close();
     $visibility = '';//открывает кнопку перехода на сайт

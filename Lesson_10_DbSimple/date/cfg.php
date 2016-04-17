@@ -1,37 +1,38 @@
 <?php
 error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
 
-require_once 'sql.cfg.php';
+require_once (ABSPATH . 'date/sql.cfg.php');
 
 if(!isset($servername) || !isset($database) || !isset($username)) {
     header('Location: install.php');
 }
-require_once $smarty_dir . 'libs/dbsimple/config.php';
-require_once $smarty_dir . 'libs/dbsimple/DbSimple/Generic.php';
-require_once $smarty_dir . 'libs/FirePHPCore/FirePHP.class.php';
-require_once $smarty_dir . 'libs/Smarty.class.php';
+require_once (ABSPATH . 'date/libs/dbsimple/config.php');
+require_once (ABSPATH . 'date/libs/dbsimple/DbSimple/Generic.php');
+require_once (ABSPATH . 'date/libs/FirePHPCore/FirePHP.class.php');
+require_once (ABSPATH . 'smarty/libs/Smarty.class.php');
 
 $smarty = new Smarty();
 
 $smarty->compile_check = true;
 $smarty->debugging = false;
 
-$smarty->template_dir = $smarty_dir . 'templates';
-$smarty->compile_dir = $smarty_dir . 'templates_c';
-$smarty->cache_dir = $smarty_dir . 'cache';
-$smarty->config_dir = $smarty_dir . 'configs';
+$smarty->template_dir = ABSPATH . 'smarty/templates';
+$smarty->compile_dir = ABSPATH . 'smarty/templates_c';
+$smarty->cache_dir = ABSPATH . 'smarty/cache';
+$smarty->config_dir = ABSPATH . 'smarty/configs';
 
 $firePHP = FirePHP::getInstance(true);
 $firePHP->setEnabled(true);
 
 // Подключаемся к БД.
 $mysqli = DbSimple_Generic::connect("mysqli://$username:$password@$servername/$database");
-
-define(TABLE_PREFIX, 'ds_'); // с подчерком!
-$mysqli->setIdentPrefix(TABLE_PREFIX); 
-
+if(mysqli_connect_error()) die("Не удалось установить соединение с БД <a href='install.php'>перейти к install</a>");
 // Устанавливаем обработчик ошибок.
 $mysqli->setErrorHandler('databaseErrorHandler');
+
+//Префиксы для таблиц
+define(TABLE_PREFIX, 'ds_');
+$mysqli->setIdentPrefix(TABLE_PREFIX); 
 
 // Код обработчика ошибок SQL.
 function databaseErrorHandler($message, $info)
@@ -44,4 +45,4 @@ function databaseErrorHandler($message, $info)
     echo "</pre>";
     exit();
 }
-
+//var_dump($mysqli);
