@@ -76,3 +76,14 @@ function deleteAds($id='', $table_name='ads_list')
     header("Location: http://" . $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']);
     exit; 
 }
+
+//Выводит форму
+function showForm($ads)
+{
+    global $smarty;
+    
+    $smarty->assign('ads', $ads);
+    $smarty->display('header.tpl');
+    $smarty->display('index.tpl');
+    $smarty->display('footer.tpl');
+}

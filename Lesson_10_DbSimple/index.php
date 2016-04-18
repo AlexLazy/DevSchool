@@ -9,7 +9,7 @@ require_once (ABSPATH . 'date/cfg.php');//настройки
 require_once (ABSPATH . 'date/functions.php');//функции
 require_once (ABSPATH . 'date/date.php');//переменные
 
-//Сортировка
+//Сортировка/выборка всех полей из базы
 if(isset($_GET['sort']) && ($_GET['sort'] === 'title' || $_GET['sort'] === 'seller_name' || $_GET['sort'] === 'price'))
 {
     $ads = parseDB($_GET['sort']);
@@ -51,8 +51,5 @@ if (filter_input(INPUT_GET, 'ads', FILTER_VALIDATE_INT) > 0 || filter_input(INPU
     }
 }
 
-$smarty->assign('ads', $ads);
-
-$smarty->display('header.tpl');
-$smarty->display('index.tpl');
-$smarty->display('footer.tpl');     
+//Вывод формы
+showForm($ads); 
