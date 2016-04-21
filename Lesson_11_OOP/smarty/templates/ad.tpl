@@ -1,4 +1,4 @@
-<div class="col-md-6">
+
 {if $ad->private == '1'}
     <div class="panel panel-success">
 {else}
@@ -14,4 +14,3 @@
             <a href="?edit={$ad->getId()}">Редактировать</a>
         </div>
     </div>
-</div>

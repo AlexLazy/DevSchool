@@ -1,8 +1,8 @@
-<?php /* Smarty version 2.6.25-dev, created on 2016-04-20 19:46:03
+<?php /* Smarty version 2.6.25-dev, created on 2016-04-21 18:13:10
          compiled from form.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('function', 'html_radios', 'form.tpl', 3, false),array('function', 'html_checkboxes', 'form.tpl', 16, false),array('function', 'html_options', 'form.tpl', 29, false),)), $this); ?>
-<form  class="col-md-6" method="POST">
+<form  class="col-md-6 text-left" method="POST">
     <input type="hidden" value='<?php echo $this->_tpl_vars['id']; ?>
 ' name='id'>
     <?php echo smarty_function_html_radios(array('name' => 'private','options' => $this->_tpl_vars['private_arr'],'selected' => $this->_tpl_vars['private']), $this);?>
@@ -75,6 +75,12 @@ smarty_core_load_plugins(array('plugins' => array(array('function', 'html_radios
         <a class="btn btn-danger" href="?delete=-1">Удалить все объявления</a>
     <?php endif; ?>
     </form>
+    <div class="col-md-6">
+        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+            <a href="?sort=title" class="btn btn-default" role="button">Название</a>
+            <a href="?sort=seller_name" class="btn btn-default" role="button">Имя</a>
+            <a href="?sort=price" class="btn btn-default" role="button">Цена</a>
+        </div>
     <?php echo $this->_tpl_vars['ads']; ?>
 
         

@@ -45,3 +45,9 @@ function databaseErrorHandler($message, $info)
     echo "</pre>";
     exit();
 }
+
+//Автозагрузка классов
+spl_autoload_register(function ($class) {
+    $file = ABSPATH . 'date/libs/' . $class . '.class.php';
+    if(file_exists($file)) include $file;
+});

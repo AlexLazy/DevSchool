@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.25-dev, created on 2016-04-20 21:20:57
+<?php /* Smarty version 2.6.25-dev, created on 2016-04-21 18:13:10
          compiled from header.tpl */ ?>
 <!doctype html>
 <html lang="en">
@@ -7,7 +7,7 @@
   <title><?php echo $_SERVER['HTTP_HOST']; ?>
 </title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-  <?php echo '<style>.container{margin-top:30px}form{display:inline-block;text-align:left}.input-group{margin-bottom:10px}.btn{margin-bottom:20px;margin-right:20px}.btn-group-justified{margin-top:30px;margin-bottom:10px}</style>'; ?>
+  <?php echo '<style>form{display:inline-block;margin-top:30px}.input-group{margin-bottom:10px}.btn{margin-bottom:20px;margin-right:20px}.btn-group-justified{margin-top:30px;margin-bottom:10px}</style>'; ?>
 
 </head>
 <body>

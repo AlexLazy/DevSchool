@@ -1,6 +1,6 @@
-<?php /* Smarty version 2.6.25-dev, created on 2016-04-20 21:34:34
+<?php /* Smarty version 2.6.25-dev, created on 2016-04-21 18:11:58
          compiled from ad.tpl */ ?>
-<div class="col-md-6">
+
 <?php if ($this->_tpl_vars['ad']->private == '1'): ?>
     <div class="panel panel-success">
 <?php else: ?>
@@ -22,4 +22,3 @@
 ">Редактировать</a>
         </div>
     </div>
-</div>

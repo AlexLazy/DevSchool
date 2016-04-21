@@ -6,7 +6,6 @@ if ( !defined('ABSPATH') )
 	define('ABSPATH', dirname(__FILE__) . '/');
 
 require_once (ABSPATH . 'date/cfg.php');//настройки
-require_once (ABSPATH . 'date/classes.php');//классы
 require_once (ABSPATH . 'date/date.php');//переменные
 
 //Сохранение объявления

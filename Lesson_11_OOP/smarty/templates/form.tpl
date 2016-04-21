@@ -1,4 +1,4 @@
-<form  class="col-md-6" method="POST">
+<form  class="col-md-6 text-left" method="POST">
     <input type="hidden" value='{$id}' name='id'>
     {html_radios name="private" options=$private_arr selected=$private}
     <div class="input-group">
@@ -60,5 +60,11 @@
         <a class="btn btn-danger" href="?delete=-1">Удалить все объявления</a>
     {/if}
     </form>
+    <div class="col-md-6">
+        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+            <a href="?sort=title" class="btn btn-default" role="button">Название</a>
+            <a href="?sort=seller_name" class="btn btn-default" role="button">Имя</a>
+            <a href="?sort=price" class="btn btn-default" role="button">Цена</a>
+        </div>
     {$ads}
         
