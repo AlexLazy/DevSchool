@@ -62,9 +62,9 @@
     </form>
     <div class="col-md-6">
         <div class="btn-group btn-group-justified" role="group" aria-label="...">
-            <a href="?sort=title" class="btn btn-default" role="button">Название</a>
-            <a href="?sort=seller_name" class="btn btn-default" role="button">Имя</a>
-            <a href="?sort=price" class="btn btn-default" role="button">Цена</a>
+            <a href="{$sort_by_title}" class="btn btn-default" role="button">Название</a>
+            <a href="{$sort_by_name}" class="btn btn-default" role="button">Имя</a>
+            <a href="{$sort_by_price}" class="btn btn-default" role="button">Цена</a>
         </div>
     {$ads}
         

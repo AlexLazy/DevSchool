@@ -18,6 +18,28 @@ class AdsStore
         $this->ads[$ad->getId()] = $ad;
     }
     
+    private function sort()
+    {
+        global $smarty;
+        
+        $rout = explode('?', $_SERVER['REQUEST_URI']);
+        $second_rout = explode('&', $rout[1]);
+        if(isset($rout[1]))
+        {
+            $pre = '?'.$rout[1].'&';
+            if(isset($second_rout[1]))
+            {
+                $pre = '?'.$second_rout[0].'&';
+            }
+        }
+        else
+        {
+            $pre ='?';
+        }
+        
+        return $pre;
+    }
+    
     public function getAllAdsFromDB()
     {
         global $mysqli;
@@ -72,6 +94,9 @@ class AdsStore
             }
             $smarty->assign('ads', $ads);
         }
+        $smarty->assign('sort_by_title', $this->sort().'sort=title');
+        $smarty->assign('sort_by_name', $this->sort().'sort=seller_name');
+        $smarty->assign('sort_by_price', $this->sort().'sort=price');
         
         return self::$instance;    
     }
