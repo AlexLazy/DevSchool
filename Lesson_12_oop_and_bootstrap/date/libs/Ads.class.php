@@ -3,16 +3,16 @@
 //Родительский класс объявления
 class Ads
 {
-    public $id;
-    public $seller_name;
-    public $email;
-    public $allow_mails;
-    public $phone;
-    public $location_id;
-    public $category_id;
-    public $title;
-    public $description;
-    public $price;
+    protected $id;
+    protected $seller_name;
+    protected $email;
+    protected $allow_mails;
+    protected $phone;
+    protected $location_id;
+    protected $category_id;
+    protected $title;
+    protected $description;
+    protected $price;
     
     public function __construct($ad)
     {
@@ -65,7 +65,11 @@ class Ads
     {
         return $this->price;
     }
-    
+    public function getObjVars()
+    {
+        return get_object_vars($this);
+    }
+
     //Получение данных для селектов из БД
     public function getLocation()
     {

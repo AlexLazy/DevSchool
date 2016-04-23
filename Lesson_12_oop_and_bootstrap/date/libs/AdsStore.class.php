@@ -71,7 +71,7 @@ class AdsStore
             else
             {
                 (isset($_GET['ads'])) ? $fillAds = $this->ads[$_GET['ads']] : $fillAds = $this->ads[$_GET['edit']];
-                foreach (get_object_vars($fillAds) as $key => $value)//Заполнение полей формы
+                foreach ($fillAds->getObjVars() as $key => $value)//Заполнение полей формы
                 {
                     $smarty->assign($key, strip_tags($value));
                 }
