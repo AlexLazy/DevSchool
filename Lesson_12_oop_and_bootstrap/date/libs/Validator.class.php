@@ -17,7 +17,7 @@ class Validator
             $smarty->assign('title', 'Заполните это поле');
             return FALSE;
         }
-        elseif(empty($ad['price']))
+        elseif(empty($ad['price']) && $ad['price'] != '0')
         {
             $smarty->assign('price', 'Заполните это поле');
             return FALSE;

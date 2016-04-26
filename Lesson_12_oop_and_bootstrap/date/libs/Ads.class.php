@@ -20,15 +20,24 @@ class Ads
         foreach ($ad as $key=>$val)
         {
             if($key == 'submit') continue;
-            $this->$key = strip_tags($val);
+            if(is_array($val))
+            {
+                $this->$key = 1;
+            }
+            else
+            {
+                $this->$key = strip_tags($val);
+            }
         }
     }
     
     public function save()
     {
         global $mysqli;
+        
         $vars = get_object_vars($this);
         $mysqli->query('REPLACE INTO ?_ads_list (?#) VALUES(?a)', array_keys($vars), array_values($vars));
+        
         header("Location: http://" . $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']);
         exit();
     }

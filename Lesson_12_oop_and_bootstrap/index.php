@@ -21,6 +21,4 @@ elseif(isset($_POST['submit']) && is_array($_POST) && $_POST['private'] == 0)
 }
 
 $ads = AdsStore::instance();
-$ads->getAllAdsFromDB();
-$ads->prepareForOut();
-$ads->display();
+$ads->run();

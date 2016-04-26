@@ -136,10 +136,13 @@ class AdsStore
         return self::$instance;    
     }
     
-    public function display()
+    public function run()
     {
         global $smarty;
 
+        self::getAllAdsFromDB();
+        self::prepareForOut();
+        
         $smarty->display('header.tpl');
         $smarty->display('form.tpl');
         $smarty->display('footer.tpl');
