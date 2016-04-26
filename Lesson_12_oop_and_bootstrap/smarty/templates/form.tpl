@@ -5,7 +5,7 @@
         <label for="fld_seller_name" class="label label-primary">
             <b>Ваше имя</b>
         </label>
-        <input required type="text" maxlength="40" class="form-control" pattern="[A-Za-zА-Яа-яЁё]+" value='{$seller_name}' name="seller_name" id="fld_seller_name">
+        <input type="text" maxlength="40" class="form-control" pattern="[A-Za-zА-Яа-яЁё]+" value='{$seller_name}' name="seller_name" id="fld_seller_name" required>
     </div>
     <div class="input-group">
         <label for="fld_email" class="label label-primary">Электронная почта</label>
@@ -40,7 +40,7 @@
     </div>
     <div id="f_title" class="input-group">
         <label for="fld_title" class="label label-primary">Название объявления</label>
-        <input required type="text" maxlength="50" class="form-control" value="{$title}" name="title" id="fld_title">
+        <input type="text" maxlength="50" class="form-control" value="{$title}" name="title" id="fld_title" required>
     </div>
     <div class="input-group">
         <label for="fld_description" class="label label-primary" id="js-description-label">Описание объявления</label>
@@ -48,7 +48,7 @@
     </div>
     <div id="price_rw" class="input-group">
         <label id="price_lbl" for="fld_price" class="label label-primary">Цена</label>
-        <input required pattern="^[0-9]+$" type="text" class="form-control" value="{$price}" name="price" id="fld_price">
+        <input pattern="^[0-9]+$" type="text" class="form-control" value="{$price}" name="price" id="fld_price" required>
     </div>
     {if isset($smarty.get.ads) && $smarty.get.ads > 0}
         <a href="index.php" class="btn btn-primary">Назад</a>

@@ -12,10 +12,28 @@ class AdsStore
         return self::$instance;
     }
     
-    public function addAds(Ads $ad)
+    private function addAds(Ads $ad)
     {
         if(!($this instanceof AdsStore)) die('AdsStore');
         $this->ads[$ad->getId()] = $ad;
+    }
+    
+    private function delete($id = null)
+    {
+        global $mysqli;
+        
+        if ($id != null)
+        {
+            unset($this->ads[$id]);
+            $mysqli->query("DELETE FROM ?_ads_list WHERE id=?d", $id);
+            return TRUE;
+        }
+        else
+        {
+            unset($this->ads);
+            $mysqli->query("DELETE FROM ?_ads_list");
+            return TRUE;
+        }
     }
     
     private function sort()
@@ -46,10 +64,23 @@ class AdsStore
         
         (isset($_GET['sort'])) ? $order = (string)$_GET['sort'] : $order = 'id';//сортировка
         $all = $mysqli->select("SELECT * FROM ?_ads_list ORDER BY $order");
+        
         foreach ($all as $value)
         {
             ($value['private'] == '1') ? $ad = new PrivateAds($value) : $ad = new CompanyAds($value);
             self::addAds($ad);
+        }
+        
+        if (filter_input(INPUT_GET, 'delete', FILTER_VALIDATE_INT) >= -1)
+        {
+            if($_GET['delete'] == -1)
+            {
+                self::delete();
+            }
+            else
+            {
+                self::delete($_GET['delete']);
+            }
         }
         return self::$instance;
     }
@@ -73,7 +104,7 @@ class AdsStore
                 (isset($_GET['ads'])) ? $fillAds = $this->ads[$_GET['ads']] : $fillAds = $this->ads[$_GET['edit']];
                 foreach ($fillAds->getObjVars() as $key => $value)//Заполнение полей формы
                 {
-                    $smarty->assign($key, strip_tags($value));
+                    $smarty->assign($key, $value);
                 }
                 foreach ($this->ads as $ad)//Заполнение обьектов объявлений
                 {
@@ -87,12 +118,16 @@ class AdsStore
         {
             $smarty->assign('location', Ads::getLocation());
             $smarty->assign('category', Ads::getCategory());
-            foreach ($this->ads as $ad)
+            if(isset($this->ads))
             {
-                $smarty->assign('ad', $ad);
-                $ads.= $smarty->fetch('ad.tpl');
+                foreach ($this->ads as $ad)
+                {
+                    $smarty->assign('ad', $ad);
+                    $ads.= $smarty->fetch('ad.tpl');
+                }
+                $smarty->assign('ads', $ads);
             }
-            $smarty->assign('ads', $ads);
+            
         }
         $smarty->assign('sort_by_title', $this->sort().'sort=title');
         $smarty->assign('sort_by_name', $this->sort().'sort=seller_name');

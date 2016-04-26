@@ -20,7 +20,7 @@ class Ads
         foreach ($ad as $key=>$val)
         {
             if($key == 'submit') continue;
-            $this->$key = $val;
+            $this->$key = strip_tags($val);
         }
     }
     
@@ -31,22 +31,6 @@ class Ads
         $mysqli->query('REPLACE INTO ?_ads_list (?#) VALUES(?a)', array_keys($vars), array_values($vars));
         header("Location: http://" . $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']);
         exit();
-    }
-    
-    public function delete($id = null)
-    {
-        global $mysqli;
-        if ($id != null)
-        {
-            $mysqli->query("DELETE FROM ?_ads_list WHERE id=?d", $id);
-        }
-        else
-        {
-            $mysqli->query("DELETE FROM ?_ads_list");
-        }
-
-        header("Location: http://" . $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']);
-        exit;
     }
     
     public function getId()

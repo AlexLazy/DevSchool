@@ -11,6 +11,6 @@ $smarty->assign('allow_mails_arr', [1 => 'Я не хочу получать во
 $smarty->assign('location', $location);
 $smarty->assign('category', $category);
 
-$smarty->assign('price', '0');
+$smarty->assign('price', '1');
 
 
