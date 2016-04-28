@@ -42,6 +42,7 @@ class AdsStore
         
         $rout = explode('?', $_SERVER['REQUEST_URI']);
         $second_rout = explode('&', $rout[1]);
+        
         if(isset($rout[1]))
         {
             $pre = '?'.$rout[1].'&';
@@ -102,7 +103,7 @@ class AdsStore
         return self::$instance;
     }
 
-    public function prepareForOut($error = null)
+    public function prepareForOut()
     {
         global $smarty;
         

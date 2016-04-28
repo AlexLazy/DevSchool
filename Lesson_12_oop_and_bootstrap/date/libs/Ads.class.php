@@ -73,6 +73,7 @@ class Ads
     {
         global $mysqli;
         $arr = $mysqli->select("SELECT id AS ARRAY_KEY, name, parent_id AS PARENT_KEY FROM ?_category");
+        
         foreach($arr as $cat)
         {
             foreach($cat['childNodes'] as $key => $val)
