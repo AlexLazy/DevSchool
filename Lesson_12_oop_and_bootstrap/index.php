@@ -12,13 +12,25 @@ require_once (ABSPATH . 'date/date.php');//переменные
 if(isset($_POST['submit']) && is_array($_POST) && $_POST['private'] == 1)
 {
     $ad = new PrivateAds($_POST);
-    if(Validator::check($ad)) $ad->save();
 }
 elseif(isset($_POST['submit']) && is_array($_POST) && $_POST['private'] == 0)
 {
     $ad = new CompanyAds($_POST);
-    if(Validator::check($ad)) $ad->save();
 }
 
 $ads = AdsStore::instance();
+
+if($ad)
+{
+    $error = Validator::check($ad);
+        if($error)
+        {
+            $ads->errorHandler($ad, $error);
+        }
+        else
+        {
+            $ad->save();
+        }
+}
+ 
 $ads->run();

@@ -5,26 +5,28 @@ class Validator
     static function check(Ads $ad)
     {
         global $smarty;
+        $error = [];
         $ad = $ad->getObjVars();
         
         if(empty($ad['seller_name']))
         {
-            $smarty->assign('seller_name', 'Заполните это поле');
-            return FALSE;
+            $error[] = 'seller_name';
         }
-        elseif(empty($ad['title']))
+        if(empty($ad['title']))
         {
-            $smarty->assign('title', 'Заполните это поле');
-            return FALSE;
+            $error[] = 'title';
         }
-        elseif(empty($ad['price']) && $ad['price'] != '0')
+        if(empty($ad['price']) && $ad['price'] != '0')
         {
-            $smarty->assign('price', 'Заполните это поле');
+            $error[] = 'price';
+        }
+        if(empty($error))
+        {
             return FALSE;
         }
         else
         {
-            return TRUE;
+            return $error;
         }
     }
 }

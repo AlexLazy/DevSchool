@@ -58,6 +58,23 @@ class AdsStore
         return $pre;
     }
     
+    function errorHandler(Ads $ad, $error = null)
+    {
+        global $smarty;
+        
+        foreach ($ad->getObjVars() as $key => $value)//Зелёный цвет заполненным полям
+        {
+            $smarty->assign($key, $value);
+            if(strlen($value)) $smarty->assign('input_'.$key, 'has-success');
+        }
+        
+        foreach ($error as $value)//Вывод сообщения полям из массива ошибок
+        {
+            $smarty->assign('error_'.$value, 'show');
+            $smarty->assign('input_'.$value, 'has-error');
+        }
+    }
+
     public function getAllAdsFromDB()
     {
         global $mysqli;
@@ -85,13 +102,10 @@ class AdsStore
         return self::$instance;
     }
 
-    public function prepareForOut()
+    public function prepareForOut($error = null)
     {
         global $smarty;
         
-        //Занесение данных в смарти
-        $smarty->assign('location', Ads::getLocation());
-        $smarty->assign('category', Ads::getCategory());
         if (filter_input(INPUT_GET, 'ads', FILTER_VALIDATE_INT) > 0 || filter_input(INPUT_GET, 'edit', FILTER_VALIDATE_INT) > 0)//Во время просмотра/редактирования
         {
             if ((isset($_GET['ads']) && empty($this->ads[$_GET['ads']])) || (isset($_GET['edit']) && empty($this->ads[$_GET['edit']])))
@@ -106,29 +120,23 @@ class AdsStore
                 {
                     $smarty->assign($key, $value);
                 }
-                foreach ($this->ads as $ad)//Заполнение обьектов объявлений
-                {
-                    $smarty->assign('ad', $ad);
-                    $ads.= $smarty->fetch('ad.tpl');
-                }
-                $smarty->assign('ads', $ads);
             }
         }
-        else
+        
+        if(isset($this->ads))
         {
-            $smarty->assign('location', Ads::getLocation());
-            $smarty->assign('category', Ads::getCategory());
-            if(isset($this->ads))
+            foreach ($this->ads as $ad)
             {
-                foreach ($this->ads as $ad)
-                {
-                    $smarty->assign('ad', $ad);
-                    $ads.= $smarty->fetch('ad.tpl');
-                }
-                $smarty->assign('ads', $ads);
+                $smarty->assign('ad', $ad);
+                $ads.= $smarty->fetch('ad.tpl');
             }
-            
+            $smarty->assign('ads', $ads);
         }
+        
+        //Селекты
+        $smarty->assign('location', Ads::getLocation());
+        $smarty->assign('category', Ads::getCategory());
+        //Сортировка
         $smarty->assign('sort_by_title', $this->sort().'sort=title');
         $smarty->assign('sort_by_name', $this->sort().'sort=seller_name');
         $smarty->assign('sort_by_price', $this->sort().'sort=price');
