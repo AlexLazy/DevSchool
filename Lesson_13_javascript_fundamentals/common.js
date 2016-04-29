@@ -39,8 +39,11 @@ function four()
         pages: 100
     };
     
-    var books = [book1, book2];
-    console.log('Недавно я прочитал книги '+books[0].title+' и '+books[1].title+', написанные соответственно авторами '+books[0].author+' и '+books[1].author+
-            ', я осилил в сумме '+(books[0].pages+books[1].pages)+' страниц, не ожидал от себя подобного.');
+    var books = {
+        book1: book1,
+        book2: book2
+    };
+    console.log('Недавно я прочитал книги '+books.book1.title+' и '+books.book2.title+', написанные соответственно авторами '+books.book1.author+' и '+books.book2.author+
+            ', я осилил в сумме '+(books.book1.pages+books.book2.pages)+' страниц, не ожидал от себя подобного.');
 }
 one(), two(), three(), four();
