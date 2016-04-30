@@ -14,7 +14,7 @@ function two()
 //    var CITY = 'Dzerzhinsk'
     const CITY = 'Dzerzhinsk';//Поддерживается не везде http://kangax.github.io/compat-table/es6/
     if(CITY != false) console.log(CITY);
-//    const CITY = 'Moscow';
+    const CITY = 'Moscow';
 }
 
 function three()
@@ -53,4 +53,7 @@ function four()
     };
     return books.display();
 }
-one(), two(), three(), four();
+//one();
+//two();
+//three();
+//four();
