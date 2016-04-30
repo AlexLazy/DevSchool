@@ -29,21 +29,17 @@ function three()
 
 function four()
 {
-    var book1 = {
-        title: 'JAVA',
-        author: 'Mett',
-        pages: 200
-    };
-    
-    var book2 = {
-        title: 'JavaScript',
-        author: 'Tom',
-        pages: 100
-    };
-    
     var books = {
-        book1: book1,
-        book2: book2,
+        book1: {
+            title: 'JAVA',
+            author: 'Mett',
+            pages: 200
+        },
+        book2: {
+            title: 'JavaScript',
+            author: 'Tom',
+            pages: 100,
+        },
         display: function()
         {
             console.log('Недавно я прочитал книги '+this.book1.title+' и '+
