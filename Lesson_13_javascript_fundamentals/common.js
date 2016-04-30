@@ -3,15 +3,17 @@ function one()
     var name = 'Алексей', age = 29;
     
     console.log('Меня зовут '+name);
-    console.log('Мне '+age+'лет');
+    console.log('Мне '+age+' лет');
     delete name, age;
+    name = age = undefined;
+    console.log(name, age);
 }
 
 function two()
 {
 //    var CITY = 'Dzerzhinsk'
     const CITY = 'Dzerzhinsk';//Поддерживается не везде http://kangax.github.io/compat-table/es6/
-    if(CITY != null) console.log(CITY);
+    if(CITY != false) console.log(CITY);
 //    const CITY = 'Moscow';
 }
 
