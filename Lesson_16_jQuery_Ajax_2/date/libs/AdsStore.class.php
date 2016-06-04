@@ -75,6 +75,23 @@ class AdsStore
             $smarty->assign('input_'.$value, 'has-error');
         }
     }
+    
+    public function getAdsJSON($sort="NULL")
+    {
+        global $mysqli;
+
+        if(isset($sort) && (($sort=='title')||($sort=='seller_name')||($sort=='price')))
+            return json_encode($mysqli->select("SELECT * FROM ?_ads_list ORDER BY $sort"));
+        else
+            return json_encode($mysqli->select("SELECT * FROM ?_ads_list"));
+    }
+    
+    public function getAdJSON($id)
+    {
+        global $mysqli;
+        
+        return json_encode($mysqli->select("SELECT * FROM ?_ads_list WHERE id=?d", $id));
+    }
 
     public function getAllAdsFromDB()
     {

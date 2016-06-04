@@ -1,19 +1,29 @@
-form{
+form {
     display:inline-block;
     margin-top:30px;
 }
-.input-group{
+.input-group {
     width:400px;
     margin-bottom:10px;
 }
-.btn{
+.btn {
     margin-bottom:20px;
     margin-right:20px;
 }
-.btn-group-justified{
+.btn-group-justified {
     margin-top:30px;
     margin-bottom:10px;
 }
-.help-block{
+.help-block {
     display: none;
 }
+.sort {
+	width: 100%;
+	margin-top: 30px;
+	margin-bottom: 20px;
+}
+.sort button {
+	width: 33.3%;
+	margin: 0;
+}
+a{cursor:pointer}

@@ -1,10 +1,10 @@
-<?php /* Smarty version 2.6.25-dev, created on 2016-05-31 05:05:15
+<?php /* Smarty version 2.6.25-dev, created on 2016-06-04 13:50:07
          compiled from form.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('function', 'html_radios', 'form.tpl', 3, false),array('function', 'html_checkboxes', 'form.tpl', 17, false),array('function', 'html_options', 'form.tpl', 29, false),)), $this); ?>
 <form  class="col-md-6 text-left" method="POST">
-    <input type="hidden" value='<?php echo $this->_tpl_vars['id']; ?>
-' name='id'>
+    <input value='<?php echo $this->_tpl_vars['id']; ?>
+' name='id' type="hidden">
     <?php echo smarty_function_html_radios(array('name' => 'private','options' => $this->_tpl_vars['private_arr'],'selected' => $this->_tpl_vars['private']), $this);?>
 
     <div class="input-group <?php echo $this->_tpl_vars['input_seller_name']; ?>
@@ -13,7 +13,7 @@ smarty_core_load_plugins(array('plugins' => array(array('function', 'html_radios
             <b>Ваше имя</b>
         </label>
         <input type="text" maxlength="40" class="form-control" pattern="[A-Za-zА-Яа-яЁё]+" value='<?php echo $this->_tpl_vars['seller_name']; ?>
-' name="seller_name" id="fld_seller_name" >
+' name="seller_name" id="fld_seller_name" data-placement="top" data-content="Укажите Ваше имя">
         <label class="help-block <?php echo $this->_tpl_vars['error_seller_name']; ?>
 " for="fld_seller_name">Укажите ваше имя</label>
     </div>
@@ -59,7 +59,7 @@ smarty_core_load_plugins(array('plugins' => array(array('function', 'html_radios
 ">
         <label for="fld_title" class="label label-primary">Название объявления</label>
         <input type="text" maxlength="50" class="form-control" value="<?php echo $this->_tpl_vars['title']; ?>
-" name="title" id="fld_title" >
+" name="title" id="fld_title" data-placement="top" data-content="Укажите название объявления">
         <label class="help-block <?php echo $this->_tpl_vars['error_title']; ?>
 " for="fld_title">Укажите название объявления</label>
     </div>
@@ -73,7 +73,7 @@ smarty_core_load_plugins(array('plugins' => array(array('function', 'html_radios
 ">
         <label id="price_lbl" for="fld_price" class="label label-primary">Цена</label>
         <input pattern="^[0-9]+$" type="text" class="form-control" value="<?php echo $this->_tpl_vars['price']; ?>
-" name="price" id="fld_price" >
+" name="price" id="fld_price" data-placement="top" data-content="Укажите цену">
         <label class="help-block <?php echo $this->_tpl_vars['error_price']; ?>
 " for="fld_title">Укажите цену</label>
     </div>
@@ -83,18 +83,19 @@ smarty_core_load_plugins(array('plugins' => array(array('function', 'html_radios
         <a href="index.php" class="btn btn-primary">Назад</a>
         <input type="submit" value="Сохранить" id="form_submit" name="submit" class="btn btn-success">
     <?php else: ?>
-        <input type="submit" value="Отправить" id="form_submit" name="submit" class="btn btn-primary">
+        <button id="form_submit" name="submit" class="btn btn-success">Отправить</button>
         <a id="del-all" class="btn btn-danger">Удалить все объявления</a>
+        <a id="back" class="btn btn-primary" style="display:none">Назад</a>
     <?php endif; ?>
+    <div id="message" class="alert alert-success" role="alert" style="display:none;width:400px">
+        Объявление добавлено
+    </div>
     </form>
     <div class="col-md-6">
-        <div class="btn-group btn-group-justified" role="group" aria-label="...">
-            <a href="<?php echo $this->_tpl_vars['sort_by_title']; ?>
-" class="btn btn-default" role="button">Название</a>
-            <a href="<?php echo $this->_tpl_vars['sort_by_name']; ?>
-" class="btn btn-default" role="button">Имя</a>
-            <a href="<?php echo $this->_tpl_vars['sort_by_price']; ?>
-" class="btn btn-default" role="button">Цена</a>
+        <div class="btn-group sort" role="group">
+            <button id="title" class="btn btn-default" type="button">Название</button>
+            <button id="seller_name" class="btn btn-default" type="button">Имя</button>
+            <button id="price" class="btn btn-default" type="button">Цена</button>
         </div>
         <div id="alert" class="alert alert-danger alert-dismissible" role="alert" style="display:none">
             <button type="button" class="close" aria-label="Close" onClick="$('#alert').fadeOut();return false;"><span aria-hidden="true">&times;</span></button>
@@ -104,4 +105,3 @@ smarty_core_load_plugins(array('plugins' => array(array('function', 'html_radios
             <?php echo $this->_tpl_vars['ads']; ?>
 
         </div>
-        

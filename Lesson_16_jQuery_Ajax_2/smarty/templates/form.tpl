@@ -1,11 +1,11 @@
 <form  class="col-md-6 text-left" method="POST">
-    <input type="hidden" value='{$id}' name='id'>
+    <input value='{$id}' name='id' type="hidden">
     {html_radios name="private" options=$private_arr selected=$private}
     <div class="input-group {$input_seller_name}">
         <label for="fld_seller_name" class="label label-primary">
             <b>Ваше имя</b>
         </label>
-        <input type="text" maxlength="40" class="form-control" pattern="[A-Za-zА-Яа-яЁё]+" value='{$seller_name}' name="seller_name" id="fld_seller_name" >
+        <input type="text" maxlength="40" class="form-control" pattern="[A-Za-zА-Яа-яЁё]+" value='{$seller_name}' name="seller_name" id="fld_seller_name" data-placement="top" data-content="Укажите Ваше имя">
         <label class="help-block {$error_seller_name}" for="fld_seller_name">Укажите ваше имя</label>
     </div>
     <div class="input-group {$input_email}">
@@ -39,7 +39,7 @@
     </div>
     <div id="f_title" class="input-group {$input_title}">
         <label for="fld_title" class="label label-primary">Название объявления</label>
-        <input type="text" maxlength="50" class="form-control" value="{$title}" name="title" id="fld_title" >
+        <input type="text" maxlength="50" class="form-control" value="{$title}" name="title" id="fld_title" data-placement="top" data-content="Укажите название объявления">
         <label class="help-block {$error_title}" for="fld_title">Укажите название объявления</label>
     </div>
     <div class="input-group {$input_description}">
@@ -48,7 +48,7 @@
     </div>
     <div id="price_rw" class="input-group {$input_price}">
         <label id="price_lbl" for="fld_price" class="label label-primary">Цена</label>
-        <input pattern="^[0-9]+$" type="text" class="form-control" value="{$price}" name="price" id="fld_price" >
+        <input pattern="^[0-9]+$" type="text" class="form-control" value="{$price}" name="price" id="fld_price" data-placement="top" data-content="Укажите цену">
         <label class="help-block {$error_price}" for="fld_title">Укажите цену</label>
     </div>
     {if isset($smarty.get.ads) && $smarty.get.ads > 0}
@@ -57,15 +57,19 @@
         <a href="index.php" class="btn btn-primary">Назад</a>
         <input type="submit" value="Сохранить" id="form_submit" name="submit" class="btn btn-success">
     {else}
-        <input type="submit" value="Отправить" id="form_submit" name="submit" class="btn btn-primary">
+        <button id="form_submit" name="submit" class="btn btn-success">Отправить</button>
         <a id="del-all" class="btn btn-danger">Удалить все объявления</a>
+        <a id="back" class="btn btn-primary" style="display:none">Назад</a>
     {/if}
+    <div id="message" class="alert alert-success" role="alert" style="display:none;width:400px">
+        Объявление добавлено
+    </div>
     </form>
     <div class="col-md-6">
-        <div class="btn-group btn-group-justified" role="group" aria-label="...">
-            <a href="{$sort_by_title}" class="btn btn-default" role="button">Название</a>
-            <a href="{$sort_by_name}" class="btn btn-default" role="button">Имя</a>
-            <a href="{$sort_by_price}" class="btn btn-default" role="button">Цена</a>
+        <div class="btn-group sort" role="group">
+            <button id="title" class="btn btn-default" type="button">Название</button>
+            <button id="seller_name" class="btn btn-default" type="button">Имя</button>
+            <button id="price" class="btn btn-default" type="button">Цена</button>
         </div>
         <div id="alert" class="alert alert-danger alert-dismissible" role="alert" style="display:none">
             <button type="button" class="close" aria-label="Close" onClick="$('#alert').fadeOut();return false;"><span aria-hidden="true">&times;</span></button>
@@ -74,4 +78,3 @@
         <div id="ads-list">
             {$ads}
         </div>
-        
