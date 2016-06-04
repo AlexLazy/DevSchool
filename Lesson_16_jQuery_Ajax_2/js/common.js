@@ -13,23 +13,6 @@ $(document).ready(function () {
             .removeAttr('checked');
     };
 
-    function delAD() {
-        $('.panel .close').on('click', function () {//удаление выбранного объявления
-            var ads    = $(this).closest('.panel'),
-                id     = ads.children('i').html(),
-                action = {"delete":id};
-
-            $.getJSON('index.php', action)
-                .always(function(){
-                    ads.fadeOut(function(){
-                        $(this).remove();
-                        showAlert();
-                    });
-                    if($('input[name="id"]').val() === id) clearForm();
-                });
-        });    
-    };
-    
     function fillForm(action) {//заполнение полей формы
         $.getJSON('ajax.php', action)
                 .always(function(response){
@@ -51,7 +34,7 @@ $(document).ready(function () {
     function switchButtons() {//переключение кнопок управления формой
             $('.ads-title, .edit').click(function(){
             var id     = $(this).closest('.panel').children('i').html(),
-                action = {"ads":id},
+                action = {"action":'ads',"id":id},
                 ths    = $(this).attr('class');
                 
             clearForm()    
@@ -79,7 +62,7 @@ $(document).ready(function () {
     function sorting() {//сортировка
         $('#title, #seller_name, #price').on('click', function () {
             var val = this.id;
-                action = {"sort":val};
+                action = {"action":'sort',"id":val};
 
             $.getJSON('ajax.php', action)
                 .always(function(response){
@@ -125,10 +108,27 @@ $(document).ready(function () {
         });
     };
     
+    function delAD() {
+        $('.panel .close').on('click', function () {//удаление выбранного объявления
+            var ads    = $(this).closest('.panel'),
+                id     = ads.children('i').html(),
+                action = {"action":'delete',"id":id};
+
+            $.getJSON('ajax.php', action)
+                .always(function(){
+                    ads.fadeOut(function(){
+                        $(this).remove();
+                        showAlert();
+                    });
+                    if($('input[name="id"]').val() === id) clearForm();
+                });
+        });    
+    };
+
     $('#del-all').click(function(){//удаление всех объявлений
         var action = {"delete":-1};
         
-        $.getJSON('index.php', action)
+        $.getJSON('ajax.php', action)
             .always(function(){
                 $('#ads-list').children().fadeOut(function(){
                     $(this).remove();
@@ -141,7 +141,7 @@ $(document).ready(function () {
         var th = $(this);
         $.ajax({
             type: "POST",
-            url: "ajax.php",
+            url: "ajax.php?action=save",
             data: th.serialize(),
             dataType: 'json'
         }).done(function (response) {
@@ -159,7 +159,6 @@ $(document).ready(function () {
 
             delAD();
             switchButtons();
-            sorting();
         });
         return false;
     });
