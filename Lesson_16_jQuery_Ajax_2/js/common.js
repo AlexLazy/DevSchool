@@ -126,7 +126,7 @@ $(document).ready(function () {
     };
 
     $('#del-all').click(function(){//удаление всех объявлений
-        var action = {"delete":-1};
+        var action = {"action":'delete',"id":-1};
         
         $.getJSON('ajax.php', action)
             .always(function(){

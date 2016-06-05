@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.25-dev, created on 2016-06-04 14:40:35
+<?php /* Smarty version 2.6.25-dev, created on 2016-06-05 04:25:25
          compiled from ad.tpl */ ?>
 <?php if ($this->_tpl_vars['ad']->private == '1'): ?>
     <div class="panel panel-success">

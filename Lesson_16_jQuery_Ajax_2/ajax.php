@@ -10,10 +10,10 @@
 	         break;
 	   }
 	   case "delete": {
-	   	if(isset($_GET['id']))
-	   		$ads->delete($_GET['id']);
-	   	else
+	   	if(isset($_GET['id']) && $_GET['id'] == -1)
 	   		$ads->delete();
+	   	elseif(isset($_GET['id']))
+	   		$ads->delete($_GET['id']);
 	   	break;
 	   }
 	   case "ads": {
