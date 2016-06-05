@@ -15,24 +15,24 @@ $(document).ready(function () {
 
     function fillForm(action) {//заполнение полей формы
         $.getJSON('ajax.php', action)
-                .always(function(response){
-                    $.each(response[0], function (index, val){
-                        var field = $('[name^='+index+']');
-                        if(index == 'allow_mails'){
-                            if(val) field.prop('checked', true);
-                            else field.val(1);
-                        }else if(index == 'private'){
-                            if(val == 1) field.first().prop('checked', true);
-                            else field.last().prop('checked', true);
-                        }else if((index == 'location_id' || index == 'category_id') && val == 0){
-                            field.val('');
-                        }else field.val(val);
-                    });
+            .always(function(response){
+                $.each(response[0], function (index, val){
+                    var field = $('[name^='+index+']');
+                    if(index == 'allow_mails'){
+                        if(val) field.prop('checked', true);
+                        else field.val(1);
+                    }else if(index == 'private'){
+                        if(val == 1) field.first().prop('checked', true);
+                        else field.last().prop('checked', true);
+                    }else if((index == 'location_id' || index == 'category_id') && val == 0){
+                        field.val('');
+                    }else field.val(val);
                 });
+            });
     };
 
     function switchButtons() {//переключение кнопок управления формой
-            $('.title, .edit').click(function(){
+            $(document).on('click', '.title, .edit', function(){
             var id     = $(this).closest('.panel').children('i').html(),
                 action = {"action":'ad',"id":id},
                 ths    = $(this).attr('class');
@@ -59,20 +59,6 @@ $(document).ready(function () {
         });
     };
 
-    function sorting() {//сортировка
-        $('#title, #seller_name, #price').on('click', function () {
-            var val = this.id;
-                action = {"action":'sort',"id":val};
-
-            $.getJSON('ajax.php', action)
-                .always(function(response){
-                    panelMaker(response);
-                    delAD();
-                    switchButtons();
-                });
-        });    
-    };
-
     function panelMaker(response) {//создание хтмла панелей с объявлениями
         $('#ads-list').html('').append($.each(response, function (i, value) {
                         var color = (value.private == 1) ? "success" : "warning";
@@ -89,7 +75,7 @@ $(document).ready(function () {
         var error = [];
 
         $('input').popover({//установка значений всем поповерам
-            trigger:'click',
+            trigger:'manual',
             template:'<div class="popover" role="tooltip"><div class="arrow"></div><div class="popover-content"></div></div>'
         });
         if($('#fld_seller_name').val() == "") error.push('#fld_seller_name');
@@ -109,7 +95,7 @@ $(document).ready(function () {
     };
     
     function delAD() {
-        $('.panel .close').on('click', function () {//удаление выбранного объявления
+        $(document).on('click', '.panel .close', function () {//удаление выбранного объявления
             var ads    = $(this).closest('.panel'),
                 id     = ads.children('i').html(),
                 action = {"action":'delete',"id":id};
@@ -137,6 +123,20 @@ $(document).ready(function () {
         });
     });
 
+    $('#title, #seller_name, #price').on('click', function () {//сортировка
+        var val = this.id;
+            action = {"action":'sort',"id":val};
+
+        $.getJSON('ajax.php', action)
+            .always(function(response){
+                panelMaker(response);
+            });
+    });
+
+    $(document).on('focus', 'input', function(){
+        $(this).popover('destroy');
+    });
+
     $("form").submit(function () {//отправка формы
         var th = $(this);
         $.ajax({
@@ -147,15 +147,11 @@ $(document).ready(function () {
         }).done(function (response) {
             panelMaker(response);
 
-            $('input').popover('destroy');
             $('#message').fadeIn().html('Объявление добавлено');
             setTimeout(function () {
                 th.trigger("reset");
                 $('#message').fadeOut();
             }, 1000);
-
-            delAD();
-            switchButtons();
         }).error(function() {
             if(fieldsChecker()) {
                 errorHandler(fieldsChecker());
@@ -171,5 +167,4 @@ $(document).ready(function () {
 
     delAD();
     switchButtons();
-    sorting();
 });
