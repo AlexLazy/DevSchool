@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.25-dev, created on 2016-06-04 13:50:07
+<?php /* Smarty version 2.6.25-dev, created on 2016-06-05 05:28:20
          compiled from form.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('function', 'html_radios', 'form.tpl', 3, false),array('function', 'html_checkboxes', 'form.tpl', 17, false),array('function', 'html_options', 'form.tpl', 29, false),)), $this); ?>
@@ -87,9 +87,7 @@ smarty_core_load_plugins(array('plugins' => array(array('function', 'html_radios
         <a id="del-all" class="btn btn-danger">Удалить все объявления</a>
         <a id="back" class="btn btn-primary" style="display:none">Назад</a>
     <?php endif; ?>
-    <div id="message" class="alert alert-success" role="alert" style="display:none;width:400px">
-        Объявление добавлено
-    </div>
+    <div id="message" class="alert alert-success" role="alert" style="display:none;width:400px"></div>
     </form>
     <div class="col-md-6">
         <div class="btn-group sort" role="group">

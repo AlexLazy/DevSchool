@@ -146,19 +146,25 @@ $(document).ready(function () {
             dataType: 'json'
         }).done(function (response) {
             panelMaker(response);
-            if(fieldsChecker()) {
-                errorHandler(fieldsChecker());
-            }else{
-                $('input').popover('destroy');
-                $('#message').fadeIn();
-                setTimeout(function () {
-                    th.trigger("reset");
-                    $('#message').fadeOut();
-                }, 1000);
-            };
+
+            $('input').popover('destroy');
+            $('#message').fadeIn().html('Объявление добавлено');
+            setTimeout(function () {
+                th.trigger("reset");
+                $('#message').fadeOut();
+            }, 1000);
 
             delAD();
             switchButtons();
+        }).error(function() {
+            if(fieldsChecker()) {
+                errorHandler(fieldsChecker());
+            }else{
+                $('#message').fadeIn().html('Произошла ошибка');
+                setTimeout(function () {
+                        $('#message').fadeOut();
+                    }, 1000);
+            };
         });
         return false;
     });

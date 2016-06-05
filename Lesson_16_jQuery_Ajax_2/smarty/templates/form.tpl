@@ -61,9 +61,7 @@
         <a id="del-all" class="btn btn-danger">Удалить все объявления</a>
         <a id="back" class="btn btn-primary" style="display:none">Назад</a>
     {/if}
-    <div id="message" class="alert alert-success" role="alert" style="display:none;width:400px">
-        Объявление добавлено
-    </div>
+    <div id="message" class="alert alert-success" role="alert" style="display:none;width:400px"></div>
     </form>
     <div class="col-md-6">
         <div class="btn-group sort" role="group">
