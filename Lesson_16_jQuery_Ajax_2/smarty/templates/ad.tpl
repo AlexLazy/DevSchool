@@ -4,7 +4,7 @@
     <div class="panel panel-warning">
 {/if}
         <div class="panel-heading">
-            Название: <a class="ads-title">{$ad->getTitle()}</a>
+            Название: <a class="title">{$ad->getTitle()}</a>
             <a class='close'>×</a>
         </div>
         <div class="panel-body">

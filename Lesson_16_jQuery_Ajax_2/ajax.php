@@ -16,7 +16,7 @@
 	   		$ads->delete($_GET['id']);
 	   	break;
 	   }
-	   case "ads": {
+	   case "ad": {
 	   	if(isset($_GET['id']))
 	   		echo $ads->getAdJSON($_GET['id']);
 	   	break;

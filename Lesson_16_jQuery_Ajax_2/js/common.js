@@ -32,13 +32,13 @@ $(document).ready(function () {
     };
 
     function switchButtons() {//переключение кнопок управления формой
-            $('.ads-title, .edit').click(function(){
+            $('.title, .edit').click(function(){
             var id     = $(this).closest('.panel').children('i').html(),
-                action = {"action":'ads',"id":id},
+                action = {"action":'ad',"id":id},
                 ths    = $(this).attr('class');
                 
             clearForm()    
-            if(ths == 'ads-title') {
+            if(ths == 'title') {
                 $('#back').fadeIn().on('click', function() {
                     clearForm()
                     $(this).hide();
@@ -77,7 +77,7 @@ $(document).ready(function () {
         $('#ads-list').html('').append($.each(response, function (i, value) {
                         var color = (value.private == 1) ? "success" : "warning";
                         $('#ads-list').append('<div class="panel panel-' 
-                            + color + '"><div class="panel-heading">Название: <a class="ads-title">'
+                            + color + '"><div class="panel-heading">Название: <a class="title">'
                             + value.title + '</a><a class="close"> × </a></div><div class="panel-body" >Цена: '
                             + value.price + 'руб | Имя: '
                             + value.seller_name + ' | <a class="edit"> Редактировать </a> </div><i class="hidden">'

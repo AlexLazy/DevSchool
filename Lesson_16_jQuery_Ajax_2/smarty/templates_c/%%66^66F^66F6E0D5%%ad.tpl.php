@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.25-dev, created on 2016-06-05 04:25:25
+<?php /* Smarty version 2.6.25-dev, created on 2016-06-05 04:46:47
          compiled from ad.tpl */ ?>
 <?php if ($this->_tpl_vars['ad']->private == '1'): ?>
     <div class="panel panel-success">
@@ -6,7 +6,7 @@
     <div class="panel panel-warning">
 <?php endif; ?>
         <div class="panel-heading">
-            Название: <a class="ads-title"><?php echo $this->_tpl_vars['ad']->getTitle(); ?>
+            Название: <a class="title"><?php echo $this->_tpl_vars['ad']->getTitle(); ?>
 </a>
             <a class='close'>×</a>
         </div>
